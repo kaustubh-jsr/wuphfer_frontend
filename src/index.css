@@ -1,0 +1,45 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap"); */
+@import url("https://fonts.googleapis.com/css?family=Roboto:400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(167, 167, 167);
+  border-radius: 40px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .hover-effect {
+    @apply hover:bg-slate-200 dark:hover:bg-hover-dark-bg transition duration-200 cursor-pointer rounded-full ease-in-out;
+  }
+
+  .icon {
+    @apply cursor-pointer w-9 h-9 hover:bg-slate-200 dark:hover:bg-hover-dark-bg hover:bg-opacity-50 flex
+     items-center justify-center rounded-full transition duration-200 ease-out;
+  }
+}
+
+.start-adorned-input {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30"><text x="5" y="19" style="font: bold 16px Arial;">@</text></svg>')
+    no-repeat;
+  border: 1px solid #555;
+  box-sizing: border-box;
+  font: 16px "Arial";
+  height: 30px;
+  padding-left: 50px;
+  width: 300px;
+}
