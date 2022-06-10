@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import {
   Feed,
@@ -11,8 +11,6 @@ import {
 import Authentication from "./pages/Authentication";
 import { MainLayout } from "./pages/MainLayout";
 import { Toaster } from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { setInitialAuthStatus } from "./redux/asyncActions/authActions";
 import SelfTweets from "./components/Home/SelfTweets";
 import SelfMedia from "./components/Home/SelfMedia";
 import SelfLikes from "./components/Home/SelfLikes";

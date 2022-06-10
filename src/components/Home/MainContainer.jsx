@@ -6,7 +6,6 @@ import { themeActions } from "../../redux/slices/themeSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const MainContainer = ({ user }) => {
-  const [posts, setPosts] = useState([]);
   const [containerTitle, setContainerTitle] = useState("Home");
   const { mode } = useSelector((state) => state.theme);
   const dispatch = useDispatch();

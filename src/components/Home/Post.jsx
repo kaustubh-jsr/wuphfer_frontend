@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsDot, BsShare, BsShareFill } from "react-icons/bs";
+import { BsDot } from "react-icons/bs";
 import { FaRegComment, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
