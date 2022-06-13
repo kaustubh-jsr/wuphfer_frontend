@@ -11,9 +11,9 @@ import {
 import Authentication from "./pages/Authentication";
 import { MainLayout } from "./pages/MainLayout";
 import { Toaster } from "react-hot-toast";
-import SelfTweets from "./components/Home/SelfTweets";
-import SelfMedia from "./components/Home/SelfMedia";
-import SelfLikes from "./components/Home/SelfLikes";
+import ProfilePosts from "./components/Home/ProfilePosts";
+import ProfileMedia from "./components/Home/ProfileMedia";
+import ProfileLikes from "./components/Home/ProfileLikes";
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -28,11 +28,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Feed />} />
-          <Route path=":username/:post_id" element={<PostDetail />} />
+          <Route path=":username/status/:post_id" element={<PostDetail />} />
           <Route path=":username" element={<Profile />}>
-            <Route index element={<SelfTweets />} />
-            <Route path="media" element={<SelfMedia />} />
-            <Route path="likes" element={<SelfLikes />} />
+            <Route index element={<ProfilePosts />} />
+            <Route path="media" element={<ProfileMedia />} />
+            <Route path="likes" element={<ProfileLikes />} />
           </Route>
         </Route>
         <Route path="auth" element={<Authentication />}>

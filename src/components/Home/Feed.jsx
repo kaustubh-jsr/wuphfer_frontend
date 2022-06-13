@@ -30,8 +30,8 @@ const Feed = () => {
         // setPosts={setPosts}
       />
       <div className="pb-72">
-        {posts.map((post, index) => (
-          <Post key={index} id={1} post={post} postPage={false} />
+        {posts.map((post) => (
+          <Post key={post.id} post={post} />
         ))}
       </div>
     </>

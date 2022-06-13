@@ -181,3 +181,57 @@ export const getFeedPosts = async (token) => {
     console.error(e);
   }
 };
+
+export const getProfilePosts = async (token, username) => {
+  try {
+    const resp = await apiClient({
+      method: "GET",
+      url: `${BASE_URL}/get_profile_data`,
+      headers: {
+        "Auth-Token": token ? token : "",
+      },
+      params: {
+        username,
+      },
+    });
+    return resp;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getMediaPosts = async (token, username) => {
+  try {
+    const resp = await apiClient({
+      method: "GET",
+      url: `${BASE_URL}/get_profile_media_posts`,
+      headers: {
+        "Auth-Token": token ? token : "",
+      },
+      params: {
+        username,
+      },
+    });
+    return resp;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getPostDetail = async (token, post_id) => {
+  try {
+    const resp = await apiClient({
+      method: "GET",
+      url: `${BASE_URL}/get_post_detail`,
+      headers: {
+        "Auth-Token": token ? token : "",
+      },
+      params: {
+        post_id,
+      },
+    });
+    return resp;
+  } catch (e) {
+    console.error(e);
+  }
+};

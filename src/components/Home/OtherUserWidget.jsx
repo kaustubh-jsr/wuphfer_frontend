@@ -1,11 +1,12 @@
 import { CircularProgress } from "@mui/material";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { followUnfollowUser as followUnfollowUserApi } from "../../api/homePage";
+import { setFeedPostsFromDB } from "../../redux/asyncActions/feedActions";
 
 const OtherUserWidget = ({ otherUser }) => {
-  // The isRecommended flag tells, if the user was recommended by server(meaning we don't follow them yet)
+  // The isRecommended flag (now removed ) tells, if the user was recommended by server(meaning we don't follow them yet)
   // In that case no need to check from server to set isFollowing, it is false
 
   // This flag is useful to reuse this widget in the following and follower list anywhere
@@ -16,6 +17,7 @@ const OtherUserWidget = ({ otherUser }) => {
   const [followedByMe, setFollowedByMe] = useState(otherUser.followed_by_me);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   // // call the api to see if the user is followed, if the isRecommended is false
@@ -37,6 +39,9 @@ const OtherUserWidget = ({ otherUser }) => {
     // is to send a flag, say iFollow=true/false from server, while creating the list.
     setLoading(true);
     const resp = await followUnfollowUserApi(token, otherUser.username);
+    // if user follows or unfollows another user
+    // set the current user feed from DB to reflect the changes
+    dispatch(setFeedPostsFromDB(token));
     setLoading(false);
     if (resp === 200) {
       setFollowedByMe((prev) => !prev);

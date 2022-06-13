@@ -12,7 +12,11 @@ export const postAdded = (token, newPost) => async (dispatch) => {
     const resp = await addPostApi(token, newPost);
     if (resp.status === 200) {
       toast.success("Your Wuphf has been sent.");
-      newPost = { ...newPost, timestamp: resp.data.new_post.timestamp };
+      newPost = {
+        ...newPost,
+        timestamp: resp.data.new_post.timestamp,
+        id: resp.data.new_post.id,
+      };
       dispatch(feedActions.postAdded({ newPost }));
       // callback()
     } else {
