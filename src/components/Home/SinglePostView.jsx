@@ -38,7 +38,7 @@ const SinglePostView = ({ post }) => {
         <div className="text-2xl">
           {post.content}
 
-          {(post.is_media === "true") | (post.is_media === true) ? (
+          {Boolean(post.is_media) ? (
             <img
               src={post.image}
               alt="post"
