@@ -1,8 +1,9 @@
 import React, { useRef, useState } from "react";
-import { FaTwitter, FaHashtag, FaRegBookmark, FaEye } from "react-icons/fa";
+import { FaHashtag, FaRegBookmark, FaEye } from "react-icons/fa";
 import { MdMailOutline, MdMoreHoriz } from "react-icons/md";
 import { BiHome } from "react-icons/bi";
 import { HiOutlineUser } from "react-icons/hi";
+import { GiSittingDog } from "react-icons/gi";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { CgMoreO } from "react-icons/cg";
 import SidebarLink from "./SidebarLink";
@@ -33,7 +34,8 @@ const Sidebar = ({ user }) => {
   return (
     <header className="hidden sm:flex flex-col flex-[0.3] flex-shrink justify-between items-center overflow-auto xl:ml-[110px] fixed z-40 h-screen dark:text-white xl:px-12 py-1 ">
       <div className="nav-main flex flex-col gap-[2px] items-start ">
-        <FaTwitter className="text-[50px] text-sky-500 dark:text-white px-3 hover-effect" />
+        <GiSittingDog className="text-[50px] text-sky-500 dark:text-white px-3 hover-effect" />
+
         <SidebarLink text="Home" Icon={BiHome} active path="/" />
         {/* <div className="flex justify-between gap-4 p-3 hover:bg-slate-200 dark:hover:bg-hover-dark-bg transition duration-200 cursor-pointer rounded-full">
           <FaHashtag className="text-2xl dark:text-white" />
@@ -53,7 +55,7 @@ const Sidebar = ({ user }) => {
 
         <div className="mt-2 hidden xl:inline">
           <button className="flex w-44 rounded-full justify-center itms-center py-3 bg-sky-500 hover:bg-sky-600 transition duration-200 ease-out text-white font-bold">
-            Woof
+            Wuphf
           </button>
         </div>
       </div>

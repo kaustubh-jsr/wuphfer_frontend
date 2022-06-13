@@ -6,7 +6,6 @@ import { themeActions } from "../../redux/slices/themeSlice";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const MainContainer = ({ user }) => {
-  const [posts, setPosts] = useState([]);
   const [containerTitle, setContainerTitle] = useState("Home");
   const { mode } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
@@ -32,7 +31,7 @@ const MainContainer = ({ user }) => {
   };
   return (
     <div className="grow max-w-2xl sm:ml-[73px] xl:ml-[420px] border-x-2 border-light-border dark:border-dark-border">
-      <div className="flex items-center bg-white bg-opacity-70 backdrop-blur-xl dark:bg-main-dark-bg sm:justify-between py-2 px-3 sticky top-0 z-50 border-b border-light-border dark:border-dark-border">
+      <div className="flex items-center bg-white bg-opacity-20 backdrop-blur-xl dark:bg-main-dark-bg dark:bg-opacity-20 sm:justify-between py-2 px-3 sticky top-0 z-50 border-b border-light-border dark:border-dark-border">
         {containerTitle !== "Home" && (
           <BiArrowBack
             onClick={goBackHandler}
