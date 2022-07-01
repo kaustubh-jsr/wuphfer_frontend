@@ -19,4 +19,6 @@ const initialState = {
 // in profile component,also when tabs change you refetch the state(only of that particular tab) in background
 //  and update it on successfull response. this can also be achieved by redux, where the previous problem of user1 data on user2
 // rofile goes away if we reset the profile state on unmount,in useEffect
-const profileSlice = createSlice({});
+const profileSlice = createSlice({
+  name: "profile",
+});

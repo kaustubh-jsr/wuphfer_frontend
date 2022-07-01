@@ -235,3 +235,47 @@ export const getPostDetail = async (token, post_id) => {
     console.error(e);
   }
 };
+
+export const bookmarkUnbookmarkPost = async (token, post) => {
+  const formData = new FormData();
+  formData.append("post_id", post.id);
+  const resp = await apiClient({
+    method: "POST",
+    url: `${BASE_URL}/bookmark_unbookmark_post`,
+    headers: {
+      "Auth-token": token,
+    },
+    data: formData,
+  });
+  return resp;
+};
+
+export const getNotifications = async (token) => {
+  try {
+    const resp = await apiClient({
+      method: "GET",
+      url: `${BASE_URL}/get_notifications`,
+      headers: {
+        "Auth-Token": token ? token : "",
+      },
+    });
+    return resp.data.notifications;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const markNotificationsRead = async (token) => {
+  try {
+    const resp = await apiClient({
+      method: "GET",
+      url: `${BASE_URL}/mark_notification_read`,
+      headers: {
+        "Auth-Token": token ? token : "",
+      },
+    });
+    return resp.data;
+  } catch (e) {
+    console.error(e);
+  }
+};

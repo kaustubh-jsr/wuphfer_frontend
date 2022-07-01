@@ -12,8 +12,8 @@ const Feed = () => {
   // depending on child route, regular prop passing doesn't work instead context is passed which is accessible by any
   // outlet component rendered by using a useOutletContext hook
   const user = useOutletContext();
-  // const [posts, setPosts] = useState([]);
   const [currentPostContent, setCurrentPostContent] = useState("");
+
   useEffect(() => {
     // retreive user feed from backend and update it in store
     if (isAuthenticated) {
@@ -21,6 +21,19 @@ const Feed = () => {
       console.log("render feed");
     }
   }, [dispatch, token, isAuthenticated]);
+
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     setScreenSize(window.innerWidth);
+  //   };
+  //   window.addEventListener("resize", handleResize);
+  //   handleResize();
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
+
+  // useEffect(() => {
+
+  // }, [screenSize]);
   return (
     <>
       <WoofInput

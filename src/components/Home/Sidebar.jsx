@@ -3,7 +3,6 @@ import { FaHashtag, FaRegBookmark, FaEye } from "react-icons/fa";
 import { MdMailOutline, MdMoreHoriz } from "react-icons/md";
 import { BiHome } from "react-icons/bi";
 import { HiOutlineUser } from "react-icons/hi";
-import { GiSittingDog } from "react-icons/gi";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { CgMoreO } from "react-icons/cg";
 import SidebarLink from "./SidebarLink";
@@ -12,8 +11,8 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/asyncActions/authActions";
 import { feedActions } from "../../redux/slices/feedSlice";
-
-const Sidebar = ({ user }) => {
+import { MaterialSymbolsSoundDetectionDogBarking } from "../../hooks/logo";
+const Sidebar = ({ user, unreadNotifications }) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const logoutModalRef = useRef();
   const dispatch = useDispatch();
@@ -34,7 +33,7 @@ const Sidebar = ({ user }) => {
   return (
     <header className="hidden sm:flex flex-col flex-[0.3] flex-shrink justify-between items-center overflow-auto xl:ml-[110px] fixed z-40 h-screen dark:text-white xl:px-12 py-1 ">
       <div className="nav-main flex flex-col gap-[2px] items-start ">
-        <GiSittingDog className="text-[50px] text-sky-500 dark:text-white px-3 hover-effect" />
+        <MaterialSymbolsSoundDetectionDogBarking className="text-[50px] text-sky-500 dark:text-white px-3 hover-effect" />
 
         <SidebarLink text="Home" Icon={BiHome} active path="/" />
         {/* <div className="flex justify-between gap-4 p-3 hover:bg-slate-200 dark:hover:bg-hover-dark-bg transition duration-200 cursor-pointer rounded-full">
@@ -46,7 +45,8 @@ const Sidebar = ({ user }) => {
         <SidebarLink
           text="Notifications"
           Icon={IoNotificationsOutline}
-          unread
+          unread={unreadNotifications}
+          path="/notifications"
         />
         <SidebarLink text="Messages" Icon={MdMailOutline} />
         <SidebarLink text="Bookmarks" Icon={FaRegBookmark} />

@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast";
 import ProfilePosts from "./components/Home/ProfilePosts";
 import ProfileMedia from "./components/Home/ProfileMedia";
 import ProfileLikes from "./components/Home/ProfileLikes";
+import UserNotifications from "./components/Home/UserNotifications";
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="media" element={<ProfileMedia />} />
             <Route path="likes" element={<ProfileLikes />} />
           </Route>
+          <Route path="notifications" element={<UserNotifications />} />
         </Route>
         <Route path="auth" element={<Authentication />}>
           <Route index element={<Login />} />

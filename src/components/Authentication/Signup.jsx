@@ -173,7 +173,7 @@ const Signup = () => {
             disabled={loading || !usernameAvailable}
           >
             {loading ? (
-              <CircularProgress sx={{ color: "white" }} size={18} />
+              <CircularProgress sx={{ color: "white" }} size={20} />
             ) : (
               "Sign Up"
             )}
