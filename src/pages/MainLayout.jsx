@@ -22,11 +22,13 @@ const MainLayout = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const localEndpoint = "ws://127.0.0.1:8000/ws/notifications";
+  const prodEndpoint =
+    "wss://wuphfer-backend-api.herokuapp.com/ws/notifications";
   let client;
   let socketRef = useRef(null);
 
   const websocketCon = () => {
-    client = new WebSocket(`${localEndpoint}?token=${token}`);
+    client = new WebSocket(`${prodEndpoint}?token=${token}`);
     client.onopen = () => {
       console.log("Websocket connected");
     };
