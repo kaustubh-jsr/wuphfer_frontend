@@ -29,7 +29,7 @@ const MainLayout = () => {
 
   const websocketCon = () => {
     let notificationIcon;
-    client = new WebSocket(`${localEndpoint}?token=${token}`);
+    client = new WebSocket(`${prodEndpoint}?token=${token}`);
     client.onopen = () => {
       console.log("Websocket connected");
     };
