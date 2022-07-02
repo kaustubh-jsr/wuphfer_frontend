@@ -3,8 +3,8 @@ import { BsDot } from "react-icons/bs";
 import { FaRegComment, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { bookmarkPost } from "../../redux/asyncActions/feedActions";
 import moment from "moment";
+import { BookmarkButton, LikeButton, RetweetButton } from "../Buttons";
 const SinglePostView = ({ post }) => {
   const { token } = useSelector((state) => state.auth);
   const [isLiked, setIsLiked] = useState(false);
@@ -20,17 +20,6 @@ const SinglePostView = ({ post }) => {
   const likeHandler = (e) => {
     e.stopPropagation();
     setIsLiked((prev) => !prev);
-  };
-  const bookmarkHandler = (e) => {
-    e.stopPropagation();
-    // this dispatch saves the status to db, and updates the slice for feed, but
-    // posts in profile and explore are not in redux store, so this dispatch just acts like an
-    // api call to server for them, their client status is maintained in the local
-    // isBookmarked state.
-    dispatch(bookmarkPost(token, post));
-    // the below statement reinforces correct bookmark status in case of posts displayed
-    // anywhere apart from feed, like profile or explore
-    setIsBookmarked((prev) => !prev);
   };
 
   return (
@@ -73,40 +62,31 @@ const SinglePostView = ({ post }) => {
             <p className="text-gray-800 dark:text-gray-400">Retweets</p>
           </div>
           <div className="flex gap-1">
-            <h6 className="font-semibold">55</h6>
-            <p className="text-gray-800 dark:text-gray-400">Likes</p>
+            <h6 className="font-semibold">{post.likes}</h6>
+            <p className="text-gray-800 dark:text-gray-400 cursor-pointer hover:underline">
+              {post.likes === 1 ? "Like" : "Likes"}
+            </p>
           </div>
         </div>
         <div className="flex justify-around">
-          <button className="flex justify-center items-center gap-1 text-gray-600 dark:text-gray-200 ">
-            <FaRegComment className="w-[40px] h-[40px] p-[12px] rounded-2xl hover:bg-sky-100 dark:hover:bg-half-transparent hover:text-sky-700" />
-          </button>
-          <button
-            onClick={retweetHandler}
-            className="flex justify-center items-center gap-1 text-gray-600 dark:text-gray-200"
-          >
-            {isRetweet ? (
-              <AiOutlineRetweet className="w-[40px] h-[40px] p-[12px] rounded-2xl text-green-500 hover:bg-green-100 dark:hover:bg-half-transparent hover:text-green-700" />
-            ) : (
-              <AiOutlineRetweet className="w-[40px] h-[40px] p-[12px] rounded-2xl hover:bg-green-100 dark:hover:bg-half-transparent hover:text-green-700" />
-            )}
-          </button>
-          <button
-            onClick={likeHandler}
-            className="flex justify-center items-center gap-1 text-gray-600 dark:text-gray-200"
-          >
-            {isLiked ? (
-              <AiFillHeart className="w-[40px] h-[40px] p-[12px] rounded-2xl text-red-600 hover:bg-red-100 dark:hover:bg-half-transparent hover:text-red-700" />
-            ) : (
-              <AiOutlineHeart className="w-[40px] h-[40px] p-[12px] rounded-2xl hover:bg-red-100 dark:hover:bg-half-transparent hover:text-red-700" />
-            )}
-          </button>
-          <button
-            onClick={bookmarkHandler}
-            className="w-[40px] h-[40px] p-[12px] rounded-2xl hover:bg-sky-100 dark:hover:bg-half-transparent hover:text-sky-700"
-          >
-            {isBookmarked ? <FaBookmark /> : <FaRegBookmark />}
-          </button>
+          <RetweetButton
+            post={post}
+            retweetHandler={retweetHandler}
+            isRetweet={isRetweet}
+            isSinglePostView={true}
+            retweetCount={15}
+          />
+          <LikeButton
+            post={post}
+            isLiked={isLiked}
+            isSinglePostView={true}
+            setIsLiked={setIsLiked}
+          />
+          <BookmarkButton
+            post={post}
+            isBookmarked={isBookmarked}
+            setIsBookmarked={setIsBookmarked}
+          />
         </div>
       </div>
     </div>

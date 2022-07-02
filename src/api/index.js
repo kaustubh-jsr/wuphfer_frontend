@@ -1,6 +1,6 @@
 import axios from "axios";
-export const BASE_URL = "https://wuphfer-backend-api.herokuapp.com";
-// export const BASE_URL = "http://127.0.0.1:8000";
+// export const BASE_URL = "https://wuphfer-backend-api.herokuapp.com";
+export const BASE_URL = "http://127.0.0.1:8000";
 
 export const apiClient = axios.create({
   xsrfHeaderName: "X-CSRFToken",

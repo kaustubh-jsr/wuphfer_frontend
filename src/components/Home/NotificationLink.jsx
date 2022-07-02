@@ -14,6 +14,7 @@ const NotificationLink = ({
   userProfilePhoto,
   time,
   seen,
+  notificationForContent,
 }) => {
   const notificationIcon =
     type === "like" ? (
@@ -59,6 +60,11 @@ const NotificationLink = ({
             . {moment(time).startOf("second").fromNow()}
           </span>
         </p>
+        {type !== "follow" && (
+          <p className="pt-4 font-normal text-sm text-gray-500 dark:text-gray-300">
+            {notificationForContent}
+          </p>
+        )}
       </div>
     </div>
   );

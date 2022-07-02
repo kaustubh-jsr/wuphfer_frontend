@@ -65,7 +65,7 @@ const UserNotifications = () => {
           return notif;
         })
       );
-    }, 5000);
+    }, 2500);
 
     return () => clearTimeout(timerId);
   }, [token, dispatch]);
@@ -91,6 +91,7 @@ const UserNotifications = () => {
             userFullName={notification.userFullName}
             userProfileLink={notification.userProfileLink}
             userProfilePhoto={notification.userProfilePhoto}
+            notificationForContent={notification.notificationForContent}
             time={notification.time}
             seen={notification.seen}
           />

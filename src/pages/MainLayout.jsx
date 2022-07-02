@@ -9,6 +9,7 @@ import { toast } from "react-hot-toast";
 import { feedActions } from "../redux/slices/feedSlice";
 import { HiOutlineUser } from "react-icons/hi";
 import ReconnectingWebSocket from "reconnecting-websocket";
+import { AiFillHeart } from "react-icons/ai";
 
 // const prodEndpoint = 'wss://127.0.0.1:8000/ws/notifications'
 
@@ -25,17 +26,23 @@ const MainLayout = () => {
   const prodEndpoint =
     "wss://wuphfer-backend-api.herokuapp.com/ws/notifications";
   let client;
-  let socketRef = useRef(null);
 
   const websocketCon = () => {
-    client = new WebSocket(`${prodEndpoint}?token=${token}`);
+    let notificationIcon;
+    client = new WebSocket(`${localEndpoint}?token=${token}`);
     client.onopen = () => {
       console.log("Websocket connected");
     };
 
     client.onmessage = (event) => {
       const notification = JSON.parse(event.data).notification;
+
       console.log(notification, notification.type, notification.text);
+      if (notification.type === "follow") {
+        notificationIcon = <HiOutlineUser className="text-white h-6 w-6" />;
+      } else if (notification.type === "like") {
+        notificationIcon = <AiFillHeart className="text-pink-600 h-6 w-6" />;
+      }
       dispatch(
         feedActions.notificationsRead({
           notificationsRead: false,
@@ -43,7 +50,7 @@ const MainLayout = () => {
       );
       const NotificationToast = (
         <div className="flex gap-2">
-          <HiOutlineUser className="text-white h-6 w-6" />
+          {notificationIcon}
           <p>
             <span className="font-bold">{notification.userFullName}</span>{" "}
             {notification.text}
