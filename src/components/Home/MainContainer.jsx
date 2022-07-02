@@ -21,6 +21,8 @@ const MainContainer = ({ user }) => {
       setContainerTitle("Home");
     } else if (location.pathname.split("/")[2] === "status") {
       setContainerTitle("Tweet");
+    } else if (location.pathname.split("/")[1] === "notifications") {
+      setContainerTitle("Notifications");
     } else {
       setContainerTitle("Profile");
     }
@@ -31,7 +33,7 @@ const MainContainer = ({ user }) => {
   };
   return (
     <div className="grow max-w-2xl sm:ml-[73px] xl:ml-[420px] border-x-2 border-light-border dark:border-dark-border">
-      <div className="flex items-center bg-white bg-opacity-20 backdrop-blur-xl dark:bg-main-dark-bg dark:bg-opacity-20 sm:justify-between py-2 px-3 sticky top-0 z-50 border-b border-light-border dark:border-dark-border">
+      <div className="flex items-center bg-white bg-opacity-20 backdrop-blur-sm dark:bg-main-dark-bg dark:bg-opacity-20 sm:justify-between py-2 px-3 sticky top-0 z-50 border-b border-light-border dark:border-dark-border">
         {containerTitle !== "Home" && (
           <BiArrowBack
             onClick={goBackHandler}

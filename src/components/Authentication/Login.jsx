@@ -45,7 +45,7 @@ const Login = () => {
           Create an account
         </Link>
       </p>
-      <div className="w-2/5">
+      <div className="w-4/5 sm:w-3/5 lg:w-2/5">
         <form className="flex flex-col gap-2.5" onSubmit={loginFormHandler}>
           <input
             type="email"
@@ -87,11 +87,11 @@ const Login = () => {
           </Link>
           <button
             type="submit"
-            className="disabled:bg-sky-300 disabled:cursor-not-allowed w-full rounded-md bg-sky-400 hover:bg-sky-500 transition duration-200 ease-out text-white py-2"
+            className="flex justify-center disabled:bg-sky-300 disabled:cursor-not-allowed w-full rounded-md bg-sky-400 hover:bg-sky-500 transition duration-200 ease-out text-white py-2"
             disabled={loading}
           >
             {loading ? (
-              <CircularProgress sx={{ color: "white" }} size={18} />
+              <CircularProgress sx={{ color: "white" }} size={20} />
             ) : (
               "Login"
             )}

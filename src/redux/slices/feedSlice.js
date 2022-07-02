@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   posts: [],
+  unreadNotifications: false,
 };
 
 // the feed reducers should be able to
@@ -19,6 +20,13 @@ const feedSlice = createSlice({
     },
     setFeedPosts(state, { payload }) {
       state.posts = payload.postsFromDB;
+    },
+    bookmarkFeedPost(state, { payload }) {
+      const post = state.posts.find((post) => post.id === payload.id);
+      if (post) post.is_bookmark = payload.is_bookmark;
+    },
+    notificationsRead(state, { payload }) {
+      state.unreadNotifications = !payload.notificationsRead;
     },
   },
 });

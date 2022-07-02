@@ -13,6 +13,10 @@ export const signup = async (formData, callback) => {
       toast.success(resp.data.message, {
         position: "top-right",
         duration: 5000,
+        style: {
+          color: "white",
+          backgroundColor: "rgb(14, 165, 233)",
+        },
       });
       callback();
     } else if (resp.status === 400) {
@@ -46,6 +50,10 @@ export const login = async (formData) => {
       toast.success(resp.data.message, {
         position: "top-right",
         duration: 5000,
+        style: {
+          color: "white",
+          backgroundColor: "rgb(14, 165, 233)",
+        },
       });
       //   the callback can be passed to thunk and called there after successfull login
       //   callback();
@@ -87,6 +95,10 @@ export const logout = async (token) => {
       toast.success(resp.data.message, {
         position: "top-right",
         duration: 5000,
+        style: {
+          color: "white",
+          backgroundColor: "rgb(14, 165, 233)",
+        },
       });
     } else {
       toast.error(resp.data.message, {

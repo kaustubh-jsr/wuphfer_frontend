@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { FaRegComment, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux/es/exports";
+import { bookmarkPost } from "../../redux/asyncActions/feedActions";
 import moment from "moment";
 const SinglePostView = ({ post }) => {
+  const { token } = useSelector((state) => state.auth);
   const [isLiked, setIsLiked] = useState(false);
   const [isRetweet, setIsRetweet] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(post.is_bookmark);
+  const dispatch = useDispatch();
+
   const postPage = true;
   const retweetHandler = (e) => {
     e.stopPropagation();
@@ -18,6 +23,13 @@ const SinglePostView = ({ post }) => {
   };
   const bookmarkHandler = (e) => {
     e.stopPropagation();
+    // this dispatch saves the status to db, and updates the slice for feed, but
+    // posts in profile and explore are not in redux store, so this dispatch just acts like an
+    // api call to server for them, their client status is maintained in the local
+    // isBookmarked state.
+    dispatch(bookmarkPost(token, post));
+    // the below statement reinforces correct bookmark status in case of posts displayed
+    // anywhere apart from feed, like profile or explore
     setIsBookmarked((prev) => !prev);
   };
 
@@ -38,7 +50,7 @@ const SinglePostView = ({ post }) => {
         <div className="text-2xl">
           {post.content}
 
-          {(post.is_media === "true") | (post.is_media === true) ? (
+          {Boolean(post.is_media) ? (
             <img
               src={post.image}
               alt="post"
