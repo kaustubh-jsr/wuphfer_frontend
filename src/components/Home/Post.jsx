@@ -59,7 +59,7 @@ const Post = ({ post }) => {
         <div className="flex justify-between mr-6 py-2">
           <button className="flex justify-center items-center gap-1 text-gray-600 dark:text-gray-200 ">
             <FaRegComment className="w-[40px] h-[40px] p-[12px] rounded-2xl hover:bg-sky-100 dark:hover:bg-half-transparent hover:text-sky-700" />
-            <p>2</p>
+            <p>{post.comments_count}</p>
           </button>
           <RetweetButton
             post={post}

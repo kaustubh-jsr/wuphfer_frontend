@@ -218,6 +218,24 @@ export const getMediaPosts = async (token, username) => {
   }
 };
 
+export const getLikedPosts = async (token, username) => {
+  try {
+    const resp = await apiClient({
+      method: "GET",
+      url: `${BASE_URL}/get_profile_liked_posts`,
+      headers: {
+        "Auth-Token": token ? token : "",
+      },
+      params: {
+        username,
+      },
+    });
+    return resp;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export const getPostDetail = async (token, post_id) => {
   try {
     const resp = await apiClient({
@@ -233,6 +251,7 @@ export const getPostDetail = async (token, post_id) => {
     return resp;
   } catch (e) {
     console.error(e);
+    return e.response.data;
   }
 };
 
@@ -294,7 +313,69 @@ export const likeUnlikePost = async (token, post) => {
     });
     return resp.data;
   } catch (e) {
-    console.error(e);
+    toast.error(e.response.data.message, {
+      position: "bottom-center",
+      duration: 5000,
+      style: {
+        color: "white",
+        backgroundColor: "rgb(14, 165, 233)",
+      },
+    });
+    return { status: "failed" };
+  }
+};
+
+export const addComment = async (token, postId, text) => {
+  try {
+    const formData = new FormData();
+    formData.append("postId", postId);
+    formData.append("text", text);
+    const resp = await apiClient({
+      method: "POST",
+      url: `${BASE_URL}/add_comment`,
+      headers: {
+        "Auth-Token": token ? token : "",
+      },
+      data: formData,
+    });
+    if (resp.status === 200) {
+      return resp.data;
+    }
+  } catch (e) {
+    console.error(e.response);
+    toast.error(e.response.data.message, {
+      position: "bottom-center",
+      duration: 5000,
+      style: {
+        color: "white",
+        backgroundColor: "rgb(14, 165, 233)",
+      },
+    });
+  }
+};
+
+export const likeUnlikeComment = async (token, comment) => {
+  try {
+    const formData = new FormData();
+    formData.append("comment_id", comment.id);
+    const resp = await apiClient({
+      method: "POST",
+      url: `${BASE_URL}/like_unlike_comment`,
+      headers: {
+        "Auth-token": token,
+      },
+      data: formData,
+    });
+    return resp.data;
+  } catch (e) {
+    toast.error(e.response.data.message, {
+      position: "bottom-center",
+      duration: 5000,
+      style: {
+        color: "white",
+        backgroundColor: "rgb(14, 165, 233)",
+      },
+    });
     return { status: "failed" };
   }
 };

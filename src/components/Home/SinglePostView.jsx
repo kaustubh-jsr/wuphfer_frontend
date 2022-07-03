@@ -7,19 +7,13 @@ import moment from "moment";
 import { BookmarkButton, LikeButton, RetweetButton } from "../Buttons";
 const SinglePostView = ({ post }) => {
   const { token } = useSelector((state) => state.auth);
-  const [isLiked, setIsLiked] = useState(false);
   const [isRetweet, setIsRetweet] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(post.is_bookmark);
-  const dispatch = useDispatch();
-
+  const [postDetailLikesCount, setPostDetailLikesCount] = useState(post.likes);
   const postPage = true;
   const retweetHandler = (e) => {
     e.stopPropagation();
     setIsRetweet((prev) => !prev);
-  };
-  const likeHandler = (e) => {
-    e.stopPropagation();
-    setIsLiked((prev) => !prev);
   };
 
   return (
@@ -62,9 +56,9 @@ const SinglePostView = ({ post }) => {
             <p className="text-gray-800 dark:text-gray-400">Retweets</p>
           </div>
           <div className="flex gap-1">
-            <h6 className="font-semibold">{post.likes}</h6>
+            <h6 className="font-semibold">{postDetailLikesCount}</h6>
             <p className="text-gray-800 dark:text-gray-400 cursor-pointer hover:underline">
-              {post.likes === 1 ? "Like" : "Likes"}
+              {postDetailLikesCount === 1 ? "Like" : "Likes"}
             </p>
           </div>
         </div>
@@ -78,9 +72,8 @@ const SinglePostView = ({ post }) => {
           />
           <LikeButton
             post={post}
-            isLiked={isLiked}
             isSinglePostView={true}
-            setIsLiked={setIsLiked}
+            setPostDetailLikesCount={setPostDetailLikesCount}
           />
           <BookmarkButton
             post={post}

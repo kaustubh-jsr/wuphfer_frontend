@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiFillHeart, AiOutlineRetweet } from "react-icons/ai";
 import { HiOutlineUser } from "react-icons/hi";
 import moment from "moment";
+import { FaRegComment } from "react-icons/fa";
 
 const NotificationLink = ({
   id,
@@ -16,34 +17,35 @@ const NotificationLink = ({
   seen,
   notificationForContent,
 }) => {
-  const notificationIcon =
-    type === "like" ? (
-      <AiFillHeart className="h-8 w-8 text-pink-600" />
-    ) : type === "rewuphf" ? (
-      <AiOutlineRetweet className="h-8 w-8 text-green-500" />
-    ) : (
-      <HiOutlineUser className="h-8 w-8 text-sky-500" />
-    );
+  let notificationIcon;
+  if (type === "like") {
+    notificationIcon = <AiFillHeart className="h-8 w-8 text-pink-600" />;
+  } else if (type === "rewuphf") {
+    notificationIcon = <AiOutlineRetweet className="h-8 w-8 text-green-500" />;
+  } else if (type === "comment") {
+    notificationIcon = <FaRegComment className="h-8 w-8 text-green-500" />;
+  } else if (type === "follow") {
+    notificationIcon = <HiOutlineUser className="h-8 w-8 text-sky-500" />;
+  }
+
   if (!seen) {
     console.log(seen, id);
   }
-  const notificationLink =
-    type === "like"
-      ? "/status/400"
-      : type === "rewuphf"
-      ? "/status/500"
-      : userProfileLink;
 
   const navigate = useNavigate();
+
+  const goToUserProfile = (e) => {
+    e.stopPropagation();
+    navigate(userProfileLink);
+  };
   return (
     <div
-      to={notificationLink}
       onClick={() => navigate(postLink)}
       className={`${
         !seen && "bg-slate-200 dark:bg-slate-900"
       } flex gap-4 py-6 pl-8 border-b border-light-border dark:border-dark-border duration-200 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800`}
     >
-      {notificationIcon} {seen}
+      {notificationIcon}
       <div className="flex flex-col gap-2">
         <img
           src={userProfilePhoto}
@@ -51,9 +53,9 @@ const NotificationLink = ({
           className="h-10 w-10 rounded-full mr-4"
         />
         <p>
-          <Link to={userProfileLink} className="font-bold hover:underline">
+          <span onClick={goToUserProfile} className="font-bold hover:underline">
             {userFullName}
-          </Link>{" "}
+          </span>{" "}
           {text}
           <span className="text-gray-500">
             {" "}

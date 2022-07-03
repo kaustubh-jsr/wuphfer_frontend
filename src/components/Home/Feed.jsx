@@ -18,7 +18,6 @@ const Feed = () => {
     // retreive user feed from backend and update it in store
     if (isAuthenticated) {
       dispatch(setFeedPostsFromDB(token));
-      console.log("render feed");
     }
   }, [dispatch, token, isAuthenticated]);
 
@@ -40,6 +39,7 @@ const Feed = () => {
         user={user}
         currentPostContent={currentPostContent}
         setCurrentPostContent={setCurrentPostContent}
+        isComment={false}
         // setPosts={setPosts}
       />
       <div className="pb-72">

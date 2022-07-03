@@ -20,6 +20,7 @@ const PostDetail = () => {
   const [currentPostContent, setCurrentPostContent] = useState("");
   const [post, setPost] = useState();
   const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState([]);
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
@@ -29,8 +30,7 @@ const PostDetail = () => {
       const resp = await getPostDetailApi(token, post_id);
       if (resp.status === 200) {
         setPost(resp.data.post);
-      } else {
-        toast.error(resp.data.message);
+        setComments(resp.data.comments);
       }
       setLoading(false);
     };
@@ -45,7 +45,7 @@ const PostDetail = () => {
           value={100}
           className="mx-auto mt-8"
         />
-      ) : (
+      ) : post ? (
         <>
           <SinglePostView post={post} />
           <WoofInput
@@ -53,11 +53,26 @@ const PostDetail = () => {
             isComment={true}
             currentPostContent={currentPostContent}
             setCurrentPostContent={setCurrentPostContent}
+            setComments={setComments}
+            parentPostId={post.id}
           />
+
+          {comments &&
+            comments.map((comment) => (
+              <Comment key={comment.id} comment={comment} />
+            ))}
+
+          {/* <Comment />
           <Comment />
-          <Comment />
-          <Comment />
+          <Comment /> */}
         </>
+      ) : (
+        <p className="flex flex-col justify-center items-center gap-10">
+          Hmm...this page doesn't exist. Try another page.
+          <button className="flex w-44 rounded-full justify-center itms-center py-3 bg-sky-500 hover:bg-sky-600 transition duration-200 ease-out text-white font-bold">
+            Home
+          </button>
+        </p>
       )}
     </div>
   );
