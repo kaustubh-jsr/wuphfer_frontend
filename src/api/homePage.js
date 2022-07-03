@@ -279,3 +279,22 @@ export const markNotificationsRead = async (token) => {
     console.error(e);
   }
 };
+
+export const likeUnlikePost = async (token, post) => {
+  try {
+    const formData = new FormData();
+    formData.append("post_id", post.id);
+    const resp = await apiClient({
+      method: "POST",
+      url: `${BASE_URL}/like_unlike_post`,
+      headers: {
+        "Auth-token": token,
+      },
+      data: formData,
+    });
+    return resp.data;
+  } catch (e) {
+    console.error(e);
+    return { status: "failed" };
+  }
+};
