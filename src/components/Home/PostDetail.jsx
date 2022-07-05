@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comment";
 import { WoofInput } from "./WoofInput";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { SinglePostView } from "./SinglePostView";
 import { useSelector } from "react-redux";
 import { getPostDetail as getPostDetailApi } from "../../api/homePage";
@@ -12,6 +12,7 @@ import { CircularProgress } from "@mui/material";
 const PostDetail = () => {
   const { post_id } = useParams();
   const { token } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   // const { posts } = useSelector((state) => state.feed);
   // problem with below line when the u checkout feed of user u don't follow, his
   // posts are not in store, so u can't get the single detail view, since u are not hitting db here/
@@ -69,7 +70,10 @@ const PostDetail = () => {
       ) : (
         <p className="flex flex-col justify-center items-center gap-10">
           Hmm...this page doesn't exist. Try another page.
-          <button className="flex w-44 rounded-full justify-center itms-center py-3 bg-sky-500 hover:bg-sky-600 transition duration-200 ease-out text-white font-bold">
+          <button
+            onClick={() => navigate("/")}
+            className="flex w-44 rounded-full justify-center itms-center py-3 bg-sky-500 hover:bg-sky-600 transition duration-200 ease-out text-white font-bold"
+          >
             Home
           </button>
         </p>

@@ -4,6 +4,7 @@ import { WoofInput } from "./WoofInput";
 import { useOutletContext } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFeedPostsFromDB } from "../../redux/asyncActions/feedActions";
+import { CircularProgress } from "@mui/material";
 const Feed = () => {
   const { posts } = useSelector((state) => state.feed);
   const { token, isAuthenticated } = useSelector((state) => state.auth);
@@ -13,11 +14,13 @@ const Feed = () => {
   // outlet component rendered by using a useOutletContext hook
   const user = useOutletContext();
   const [currentPostContent, setCurrentPostContent] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // retreive user feed from backend and update it in store
     if (isAuthenticated) {
       dispatch(setFeedPostsFromDB(token));
+      setLoading(false);
     }
   }, [dispatch, token, isAuthenticated]);
 
@@ -33,7 +36,16 @@ const Feed = () => {
   // useEffect(() => {
 
   // }, [screenSize]);
-  return (
+  return loading ? (
+    <div className="flex justify-center">
+      <CircularProgress
+        size={30}
+        thickness={4}
+        value={100}
+        className="mx-auto mt-8"
+      />
+    </div>
+  ) : (
     <>
       <WoofInput
         user={user}

@@ -328,7 +328,7 @@ export const likeUnlikePost = async (token, post) => {
 export const addComment = async (token, postId, text) => {
   try {
     const formData = new FormData();
-    formData.append("postId", postId);
+    formData.append("post_id", postId);
     formData.append("text", text);
     const resp = await apiClient({
       method: "POST",
@@ -361,6 +361,31 @@ export const likeUnlikeComment = async (token, comment) => {
     const resp = await apiClient({
       method: "POST",
       url: `${BASE_URL}/like_unlike_comment`,
+      headers: {
+        "Auth-token": token,
+      },
+      data: formData,
+    });
+    return resp.data;
+  } catch (e) {
+    toast.error(e.response.data.message, {
+      position: "bottom-center",
+      duration: 5000,
+      style: {
+        color: "white",
+        backgroundColor: "rgb(14, 165, 233)",
+      },
+    });
+    return { status: "failed" };
+  }
+};
+export const repostUndoRepost = async (token, post) => {
+  try {
+    const formData = new FormData();
+    formData.append("post_id", post.id);
+    const resp = await apiClient({
+      method: "POST",
+      url: `${BASE_URL}/repost_undo_repost`,
       headers: {
         "Auth-token": token,
       },

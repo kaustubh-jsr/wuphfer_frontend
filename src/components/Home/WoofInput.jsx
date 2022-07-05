@@ -55,8 +55,8 @@ const WoofInput = ({
   };
 
   const sendPost = async () => {
+    setLoading(true);
     if (isComment) {
-      console.log("is comment");
       // make api call, and after success setComments.
       const { message, new_comment } = await addCommentApi(
         token,
@@ -84,7 +84,7 @@ const WoofInput = ({
       //   likes: 0,
       // };
       setComments((prev) => [...prev, new_comment]);
-      setCurrentPostContent("");
+
       toast.success(message, {
         position: "bottom-center",
         duration: 5000,
@@ -93,9 +93,7 @@ const WoofInput = ({
           backgroundColor: "rgb(14, 165, 233)",
         },
       });
-      setLoading(false);
     } else {
-      setLoading(true);
       let post_image;
       // create a post object with proper api keys and
       // then setPosts with this obj
@@ -123,10 +121,10 @@ const WoofInput = ({
       };
       // create an async thunk dispatch here for postAdded
       dispatch(postAdded(token, newPost));
-      setCurrentPostContent("");
-      setSelectedFile(null);
-      setLoading(false);
     }
+    setSelectedFile(null);
+    setCurrentPostContent("");
+    setLoading(false);
   };
   // const [currentColor, setCurrentColor] = useState("red-600");
   return (
@@ -173,7 +171,7 @@ const WoofInput = ({
                 className="icon"
                 onClick={() => filePickerRef.current.click()}
               >
-                <HiOutlinePhotograph className="h-24 text-red-600" />
+                <HiOutlinePhotograph className="h-24 text-sky-500" />
                 <input
                   type="file"
                   hidden
@@ -185,11 +183,11 @@ const WoofInput = ({
               <HiChartBar className="h-24 text-red-600" />
             </div> */}
               <div className="icon">
-                <HiOutlineCalendar className="h-24 text-red-600" />
+                <HiOutlineCalendar className="h-24 text-sky-500" />
               </div>
               <div className="icon relative">
                 <HiEmojiHappy
-                  className="h-24 text-red-600"
+                  className="h-24 text-sky-500"
                   onClick={() => setShowEmojis((prev) => !prev)}
                 />
                 {showEmojis && (
