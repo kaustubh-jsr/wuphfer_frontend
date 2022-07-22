@@ -9,7 +9,8 @@ import { toast } from "react-hot-toast";
 import { feedActions } from "../redux/slices/feedSlice";
 import { HiOutlineUser } from "react-icons/hi";
 import ReconnectingWebSocket from "reconnecting-websocket";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineRetweet } from "react-icons/ai";
+import { FaRegComment } from "react-icons/fa";
 
 // const prodEndpoint = 'wss://127.0.0.1:8000/ws/notifications'
 
@@ -42,6 +43,12 @@ const MainLayout = () => {
         notificationIcon = <HiOutlineUser className="text-white h-6 w-6" />;
       } else if (notification.type === "like") {
         notificationIcon = <AiFillHeart className="text-pink-600 h-6 w-6" />;
+      } else if (notification.type === "comment") {
+        notificationIcon = <FaRegComment className="text-green-600 h-6 w-6" />;
+      } else if (notification.type === "rewuphf") {
+        notificationIcon = (
+          <AiOutlineRetweet className="text-green-600 h-6 w-6" />
+        );
       }
       dispatch(
         feedActions.notificationsRead({

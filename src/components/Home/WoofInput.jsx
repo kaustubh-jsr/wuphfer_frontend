@@ -10,13 +10,16 @@ import useClickOutside from "../../hooks/useClickOutside";
 import { uploadMedia } from "../../api";
 import { useDispatch, useSelector } from "react-redux";
 import { postAdded } from "../../redux/asyncActions/feedActions";
+import { addComment as addCommentApi } from "../../api/homePage";
+import toast from "react-hot-toast";
 
 const WoofInput = ({
   isComment,
   user,
   currentPostContent,
   setCurrentPostContent,
-  // setPosts,
+  setComments,
+  parentPostId,
 }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [showEmojis, setShowEmojis] = useState(false);
@@ -53,35 +56,74 @@ const WoofInput = ({
 
   const sendPost = async () => {
     setLoading(true);
-    let post_image;
-    // create a post object with proper api keys and
-    // then setPosts with this obj
-    // setPosts((prev) => [currentPost, ...prev]);
-    // user --> {first_name,last_name,username,avatar}
-    // content --> post content if any else ""
-    // image --> image url if any else ""
-    // is_media --> true if image_url != ""
-    // timestamp --> timestamp from backend
-    if (selectedFile) {
-      post_image = await uploadMedia({
-        type: "image",
-        file: selectedFile,
-        preset: "u07iybqx",
+    if (isComment) {
+      // make api call, and after success setComments.
+      const { message, new_comment } = await addCommentApi(
+        token,
+        parentPostId,
+        currentPostContent
+      );
+      // const newComment = {
+      //   // user_profile_image
+      //   // user_full_name
+      //   // post_username
+      //   // user_username
+      //   user: {
+      //     profile_image:
+      //       "https://res.cloudinary.com/kaustubh-apps/image/upload/v1655066288/e8x4hpsttdwlbuhl7y4j.jpg",
+      //     first_name: "Michael",
+      //     last_name: "Scottt",
+      //     username: "prison_mike",
+      //   },
+      //   post: {
+      //     user: {
+      //       username: "michael_scots",
+      //     },
+      //   },
+      //   text: currentPostContent,
+      //   likes: 0,
+      // };
+      setComments((prev) => [...prev, new_comment]);
+
+      toast.success(message, {
+        position: "bottom-center",
+        duration: 5000,
+        style: {
+          color: "white",
+          backgroundColor: "rgb(14, 165, 233)",
+        },
       });
+    } else {
+      let post_image;
+      // create a post object with proper api keys and
+      // then setPosts with this obj
+      // setPosts((prev) => [currentPost, ...prev]);
+      // user --> {first_name,last_name,username,avatar}
+      // content --> post content if any else ""
+      // image --> image url if any else ""
+      // is_media --> true if image_url != ""
+      // timestamp --> timestamp from backend
+      if (selectedFile) {
+        post_image = await uploadMedia({
+          type: "image",
+          file: selectedFile,
+          preset: "u07iybqx",
+        });
+      }
+      const newPost = {
+        user: {
+          ...user,
+        },
+        content: currentPostContent,
+        image: post_image,
+        is_media: post_image ? true : false,
+        timestamp: "just now",
+      };
+      // create an async thunk dispatch here for postAdded
+      dispatch(postAdded(token, newPost));
     }
-    const newPost = {
-      user: {
-        ...user,
-      },
-      content: currentPostContent,
-      image: post_image,
-      is_media: post_image ? true : false,
-      timestamp: "just now",
-    };
-    // create an async thunk dispatch here for postAdded
-    dispatch(postAdded(token, newPost));
-    setCurrentPostContent("");
     setSelectedFile(null);
+    setCurrentPostContent("");
     setLoading(false);
   };
   // const [currentColor, setCurrentColor] = useState("red-600");
@@ -129,7 +171,7 @@ const WoofInput = ({
                 className="icon"
                 onClick={() => filePickerRef.current.click()}
               >
-                <HiOutlinePhotograph className="h-24 text-red-600" />
+                <HiOutlinePhotograph className="h-24 text-sky-500" />
                 <input
                   type="file"
                   hidden
@@ -141,11 +183,11 @@ const WoofInput = ({
               <HiChartBar className="h-24 text-red-600" />
             </div> */}
               <div className="icon">
-                <HiOutlineCalendar className="h-24 text-red-600" />
+                <HiOutlineCalendar className="h-24 text-sky-500" />
               </div>
               <div className="icon relative">
                 <HiEmojiHappy
-                  className="h-24 text-red-600"
+                  className="h-24 text-sky-500"
                   onClick={() => setShowEmojis((prev) => !prev)}
                 />
                 {showEmojis && (

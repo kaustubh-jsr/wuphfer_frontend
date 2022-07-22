@@ -3,7 +3,7 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { likeUnlikePost as likeUnlikePostApi } from "../../api/homePage";
 // import Heart from "./TwitterHeart";
-const LikeButton = ({ post, isSinglePostView }) => {
+const LikeButton = ({ post, isSinglePostView, setPostDetailLikesCount }) => {
   const { token } = useSelector((state) => state.auth);
   const [isLiked, setIsLiked] = useState(post.is_liked);
   const [likeCount, setLikeCount] = useState(post.likes);
@@ -11,11 +11,16 @@ const LikeButton = ({ post, isSinglePostView }) => {
   // const [isclicked, setIsClicked] = useState(isLiked);
 
   const likeHandler = (e) => {
-    console.log(likeCount);
     e.stopPropagation();
     if (isLiked) {
+      if (isSinglePostView) {
+        setPostDetailLikesCount((prev) => prev - 1);
+      }
       setLikeCount((prev) => prev - 1);
     } else {
+      if (isSinglePostView) {
+        setPostDetailLikesCount((prev) => prev + 1);
+      }
       setLikeCount((prev) => prev + 1);
     }
     setIsLiked((prev) => !prev);
@@ -26,13 +31,22 @@ const LikeButton = ({ post, isSinglePostView }) => {
         if (resp.likeStatus === "liked") {
           setIsLiked(true);
           setLikeCount(resp.totalLikes);
+          if (isSinglePostView) {
+            setPostDetailLikesCount(resp.totalLikes);
+          }
         } else {
           setIsLiked(false);
           setLikeCount(resp.totalLikes);
+          if (isSinglePostView) {
+            setPostDetailLikesCount(resp.totalLikes);
+          }
         }
       } else {
         setIsLiked((prev) => !prev);
-        setLikeCount((prev) => prev - 1);
+        setLikeCount((prev) => (prev > 1 ? prev - 1 : 0));
+        if (isSinglePostView) {
+          setPostDetailLikesCount((prev) => (prev > 1 ? prev - 1 : 0));
+        }
       }
     })();
     // if failed, revert to prev state.

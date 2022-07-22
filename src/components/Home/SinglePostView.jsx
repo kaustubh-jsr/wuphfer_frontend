@@ -6,24 +6,26 @@ import { useDispatch, useSelector } from "react-redux/es/exports";
 import moment from "moment";
 import { BookmarkButton, LikeButton, RetweetButton } from "../Buttons";
 const SinglePostView = ({ post }) => {
-  const { token } = useSelector((state) => state.auth);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isRetweet, setIsRetweet] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(post.is_bookmark);
-  const dispatch = useDispatch();
-
+  const [postDetailLikesCount, setPostDetailLikesCount] = useState(post.likes);
+  const [postDetailSharesCount, setPostDetailSharesCount] = useState(
+    post.share_count
+  );
   const postPage = true;
-  const retweetHandler = (e) => {
-    e.stopPropagation();
-    setIsRetweet((prev) => !prev);
-  };
-  const likeHandler = (e) => {
-    e.stopPropagation();
-    setIsLiked((prev) => !prev);
-  };
 
   return (
     <div className="p-3 flex-col border-b border-light-border dark:border-dark-border duration-200">
+      {post.is_retweet && (
+        <div className="flex gap-2 pb-2">
+          <AiOutlineRetweet className="w-[15px] h-[15px] text-gray-500 mb-2" />
+          <p className="text-sm font-medium text-gray-500">
+            {post.retweeted_by_username === post.current_user_username
+              ? "You"
+              : post.retweeted_by_fullname}{" "}
+            rewuphfed
+          </p>
+        </div>
+      )}
       <div className="flex mb-4">
         <img
           src={post.user.profile_image}
@@ -58,29 +60,26 @@ const SinglePostView = ({ post }) => {
         </div>
         <div className="flex gap-4 border-y border-light-border dark:border-dark-border py-2 my-2">
           <div className="flex gap-1">
-            <h6 className="font-semibold">25</h6>
+            <h6 className="font-semibold">{postDetailSharesCount}</h6>
             <p className="text-gray-800 dark:text-gray-400">Retweets</p>
           </div>
           <div className="flex gap-1">
-            <h6 className="font-semibold">{post.likes}</h6>
+            <h6 className="font-semibold">{postDetailLikesCount}</h6>
             <p className="text-gray-800 dark:text-gray-400 cursor-pointer hover:underline">
-              {post.likes === 1 ? "Like" : "Likes"}
+              {postDetailLikesCount === 1 ? "Like" : "Likes"}
             </p>
           </div>
         </div>
         <div className="flex justify-around">
           <RetweetButton
             post={post}
-            retweetHandler={retweetHandler}
-            isRetweet={isRetweet}
             isSinglePostView={true}
-            retweetCount={15}
+            setPostDetailSharesCount={setPostDetailSharesCount}
           />
           <LikeButton
             post={post}
-            isLiked={isLiked}
             isSinglePostView={true}
-            setIsLiked={setIsLiked}
+            setPostDetailLikesCount={setPostDetailLikesCount}
           />
           <BookmarkButton
             post={post}

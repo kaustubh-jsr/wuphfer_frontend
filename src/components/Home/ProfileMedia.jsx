@@ -17,6 +17,7 @@ const ProfileMedia = () => {
       const resp = await getMediaPostsApi(token, username);
       if (resp.status === 200) {
         setMediaPosts(resp.data.mediaPosts);
+        console.log(resp.data.mediaPosts);
       } else {
         toast.error(resp.data.message);
       }
@@ -33,10 +34,12 @@ const ProfileMedia = () => {
           value={100}
           className="mx-auto mt-8"
         />
-      ) : mediaPosts ? (
+      ) : mediaPosts.length ? (
         mediaPosts.map((post) => <Post key={post.id} post={post} />)
       ) : (
-        <h4>No media posts to show.</h4>
+        <p className="flex justify-center font-normal text-lg pt-4">
+          Your media posts will show up here
+        </p>
       )}
     </div>
   );
