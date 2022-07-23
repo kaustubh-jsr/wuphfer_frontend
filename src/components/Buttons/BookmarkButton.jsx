@@ -2,6 +2,7 @@ import React from "react";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { bookmarkPost } from "../../redux/asyncActions/feedActions";
+
 const BookmarkButton = ({ post, isBookmarked, setIsBookmarked }) => {
   const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
@@ -11,7 +12,8 @@ const BookmarkButton = ({ post, isBookmarked, setIsBookmarked }) => {
     // this dispatch saves the status to db, and updates the slice for feed, but
     // posts in profile and explore are not in redux store, so this dispatch just acts like an
     // api call to server for them, their client status is maintained in the local
-    // isBookmarked state.
+    // isBookmarked state.Internally it also calls dispatch(add/removeBookmark()), to make changes
+    // to the bookmarkSlice
     dispatch(bookmarkPost(token, post));
     // the below statement reinforces correct bookmark status in case of posts displayed
     // anywhere apart from feed, like profile or explore

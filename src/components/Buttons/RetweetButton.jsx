@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { AiOutlineRetweet } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { repostUndoRepost as repostUndoRepostApi } from "../../api/homePage";
+import { feedActions } from "../../redux/slices/feedSlice";
 
 // This button is used in Post and SinglePostView components.
 const RetweetButton = ({
@@ -13,6 +14,7 @@ const RetweetButton = ({
   const { token } = useSelector((state) => state.auth);
   const [retweetCount, setRetweetCount] = useState(post.share_count);
   const [isRetweetByMe, setIsRetweetByMe] = useState(post.retweeted_by_me);
+  const dispatch = useDispatch();
   const retweetHandler = (e) => {
     e.stopPropagation();
     // update UI temporarily for faster response
@@ -21,11 +23,13 @@ const RetweetButton = ({
       if (isSinglePostView) {
         setPostDetailSharesCount((prev) => prev - 1);
       }
+      dispatch(feedActions.undoRepostFeedPost({ id: post.id }));
     } else {
       setRetweetCount((prev) => prev + 1);
       if (isSinglePostView) {
         setPostDetailSharesCount((prev) => prev + 1);
       }
+      dispatch(feedActions.repostFeedPost({ id: post.id }));
     }
     setIsRetweetByMe((prev) => !prev);
 

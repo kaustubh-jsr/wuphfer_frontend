@@ -284,6 +284,22 @@ export const getNotifications = async (token) => {
   }
 };
 
+export const getBookmarks = async (token) => {
+  try {
+    const resp = await apiClient({
+      method: "GET",
+      url: `${BASE_URL}/get_bookmarks`,
+      headers: {
+        "Auth-Token": token ? token : "",
+      },
+    });
+    return resp.data;
+  } catch (e) {
+    console.error(e);
+    return { status: "failed" };
+  }
+};
+
 export const markNotificationsRead = async (token) => {
   try {
     const resp = await apiClient({

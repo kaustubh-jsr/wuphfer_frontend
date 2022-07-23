@@ -49,7 +49,7 @@ const Sidebar = ({ user, unreadNotifications }) => {
           path="/notifications"
         />
         <SidebarLink text="Messages" Icon={MdMailOutline} />
-        <SidebarLink text="Bookmarks" Icon={FaRegBookmark} />
+        <SidebarLink text="Bookmarks" Icon={FaRegBookmark} path="/bookmarks" />
         <SidebarLink text="Profile" Icon={HiOutlineUser} path={user.username} />
         <SidebarLink text="More" Icon={CgMoreO} />
 

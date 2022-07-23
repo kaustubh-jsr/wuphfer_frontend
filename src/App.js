@@ -15,6 +15,7 @@ import ProfilePosts from "./components/Home/ProfilePosts";
 import ProfileMedia from "./components/Home/ProfileMedia";
 import ProfileLikes from "./components/Home/ProfileLikes";
 import UserNotifications from "./components/Home/UserNotifications";
+import { Bookmarks } from "./components/Home/Bookmarks";
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="likes" element={<ProfileLikes />} />
           </Route>
           <Route path="notifications" element={<UserNotifications />} />
+          <Route path="bookmarks" element={<Bookmarks />} />
         </Route>
         <Route path="auth" element={<Authentication />}>
           <Route index element={<Login />} />
