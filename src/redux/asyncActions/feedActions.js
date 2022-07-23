@@ -5,6 +5,7 @@ import {
   getFeedPosts as getFeedPostsApi,
   markNotificationsRead as markNotificationsReadApi,
 } from "../../api/homePage";
+import { bookmarkActions } from "../slices/bookmarkSlice";
 import { feedActions } from "../slices/feedSlice";
 
 // write a postAdded action creator thunk to save the post to backend
@@ -62,6 +63,11 @@ export const bookmarkPost = (token, post) => async (dispatch) => {
           is_bookmark: resp.data.status === "removed" ? 0 : 1,
         })
       );
+      if (resp.data.status === "removed") {
+        dispatch(bookmarkActions.removeBookmark({ post: post }));
+      } else {
+        dispatch(bookmarkActions.addBookmark({ post: resp.data.post }));
+      }
       toast.success(resp.data.message, {
         position: "bottom-center",
         duration: 5000,

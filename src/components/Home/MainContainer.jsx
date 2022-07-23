@@ -23,6 +23,8 @@ const MainContainer = ({ user }) => {
       setContainerTitle("Tweet");
     } else if (location.pathname.split("/")[1] === "notifications") {
       setContainerTitle("Notifications");
+    } else if (location.pathname.split("/")[1] === "bookmarks") {
+      setContainerTitle("Bookmarks");
     } else {
       setContainerTitle("Profile");
     }

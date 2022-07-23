@@ -28,6 +28,34 @@ const feedSlice = createSlice({
     notificationsRead(state, { payload }) {
       state.unreadNotifications = !payload.notificationsRead;
     },
+    likeFeedPost(state, { payload }) {
+      const post = state.posts.find((post) => post.id === payload.id);
+      if (post) {
+        post.is_liked = true;
+        post.likes += 1;
+      }
+    },
+    unlikeFeedPost(state, { payload }) {
+      const post = state.posts.find((post) => post.id === payload.id);
+      if (post) {
+        post.is_liked = false;
+        post.likes -= 1;
+      }
+    },
+    repostFeedPost(state, { payload }) {
+      const post = state.posts.find((post) => post.id === payload.id);
+      if (post) {
+        post.retweeted_by_me = true;
+        post.share_count += 1;
+      }
+    },
+    undoRepostFeedPost(state, { payload }) {
+      const post = state.posts.find((post) => post.id === payload.id);
+      if (post) {
+        post.retweeted_by_me = false;
+        post.share_count -= 1;
+      }
+    },
   },
 });
 

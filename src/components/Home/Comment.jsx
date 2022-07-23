@@ -59,7 +59,7 @@ const Comment = ({ comment }) => {
         <p className="pb-2 text-gray-500 text-md">
           Replying to{" "}
           <Link
-            to="/michael_scott"
+            to={`/${comment.post_username}`}
             className="text-sky-600 cursor-pointer hover:underline"
           >
             @{comment.post_username}

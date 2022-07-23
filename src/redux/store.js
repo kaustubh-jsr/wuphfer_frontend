@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./slices/authSlice";
+import { bookmarkReducer } from "./slices/bookmarkSlice";
 import { feedReducer } from "./slices/feedSlice";
 import { themeReducer } from "./slices/themeSlice";
 // 1.State (Global Store)
@@ -35,5 +36,10 @@ import { themeReducer } from "./slices/themeSlice";
 //     }
 // })
 export const store = configureStore({
-  reducer: { auth: authReducer, theme: themeReducer, feed: feedReducer },
+  reducer: {
+    auth: authReducer,
+    theme: themeReducer,
+    feed: feedReducer,
+    bookmark: bookmarkReducer,
+  },
 });
