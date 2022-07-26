@@ -39,6 +39,12 @@ const Login = () => {
       )
     );
   };
+
+  const fillTestCredentials = (e) => {
+    e.preventDefault();
+    setEmail("kaustubhp.jsr@gmail.com");
+    setPassword("testpassword");
+  };
   return (
     <>
       <p className="text-sm text-gray-400 mb-5 font-semibold">
@@ -98,7 +104,10 @@ const Login = () => {
               "Login"
             )}
           </button>
-          <button className="w-full rounded-md bg-white text-sky-500 border-2 transition duration-200 ease-out border-sky-500 hover:bg-sky-400 hover:text-white py-1">
+          <button
+            onClick={fillTestCredentials}
+            className="w-full rounded-md bg-white text-sky-500 border-2 transition duration-200 ease-out border-sky-500 hover:bg-sky-400 hover:text-white py-1"
+          >
             Use Test Credentials
           </button>
         </form>
