@@ -14,8 +14,9 @@ export const setInitialAuthStatus = () => {
 // update the values in store, if at all we are using them, and it seems we could use the store user details for
 // things like posting a tweet, why?bcoz tweet is posted in WoofInput then, it needs to appear on feed, profile, etc.
 //
-export const login = (formData, callback) => async (dispatch) => {
+export const login = (formData, callback, setLoading) => async (dispatch) => {
   try {
+    setLoading(true);
     const resp_token = await loginApi(formData);
     if (resp_token) {
       dispatch(authActions.login({ token: resp_token }));
@@ -31,6 +32,8 @@ export const login = (formData, callback) => async (dispatch) => {
     }
   } catch (e) {
     console.error(e);
+  } finally {
+    setLoading(false);
   }
 };
 

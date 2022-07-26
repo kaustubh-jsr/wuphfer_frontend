@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getNotifications as getNotificationsApi } from "../../api/homePage";
 import NotificationLink from "./NotificationLink";
 import { markNotificationsRead } from "../../redux/asyncActions/feedActions";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 const UserNotifications = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,7 @@ const UserNotifications = () => {
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState(initialNotifications);
-
+  useDocumentTitle("Notifications / Wuphfer");
   useEffect(() => {
     // get the notifications from server
     (async () => {

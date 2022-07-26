@@ -1,8 +1,9 @@
 import { apiClient, BASE_URL } from "./";
 import toast from "react-hot-toast";
 
-export const signup = async (formData, callback) => {
+export const signup = async (formData, callback, setLoading) => {
   try {
+    setLoading(true);
     console.log(formData.get("email"));
     const resp = await apiClient({
       method: "POST",
@@ -36,6 +37,8 @@ export const signup = async (formData, callback) => {
       position: "top-right",
       duration: 5000,
     });
+  } finally {
+    setLoading(false);
   }
 };
 

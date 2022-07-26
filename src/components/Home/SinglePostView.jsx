@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { BsDot } from "react-icons/bs";
-import { FaRegComment, FaRegBookmark, FaBookmark } from "react-icons/fa";
-import { AiOutlineRetweet, AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux/es/exports";
+import { AiOutlineRetweet } from "react-icons/ai";
+
 import moment from "moment";
 import { BookmarkButton, LikeButton, RetweetButton } from "../Buttons";
 const SinglePostView = ({ post }) => {

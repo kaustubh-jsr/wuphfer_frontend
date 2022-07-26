@@ -27,15 +27,17 @@ const Login = () => {
 
   const loginFormHandler = (e) => {
     e.preventDefault();
-    setLoading(true);
     let formData = new FormData(e.target);
     formData.append("password", password);
     dispatch(
-      login(formData, () => {
-        navigate("/", { replace: true });
-      })
+      login(
+        formData,
+        () => {
+          navigate("/", { replace: true });
+        },
+        setLoading
+      )
     );
-    setLoading(false);
   };
   return (
     <>

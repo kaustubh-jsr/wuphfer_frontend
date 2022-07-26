@@ -62,16 +62,18 @@ const Signup = () => {
     e.preventDefault();
     let formData = new FormData(e.target);
     formData.append("username", username);
-    setLoading(true);
     if (password === rePassword) {
       // proceed to api call,setErrors from server side if any, else login and replaace history
-      signupApi(formData, () => {
-        navigate("/auth", { replace: true, state: { from: location } });
-      });
+      signupApi(
+        formData,
+        () => {
+          navigate("/auth", { replace: true, state: { from: location } });
+        },
+        setLoading
+      );
     } else {
       setMismatchError("Passwords do not match.");
     }
-    setLoading(false);
   };
 
   // const handleChange = (prop) => (event) => {

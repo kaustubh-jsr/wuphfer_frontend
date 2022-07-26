@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { FaHashtag, FaRegBookmark, FaEye } from "react-icons/fa";
-import { MdMailOutline, MdMoreHoriz } from "react-icons/md";
+import { MdMailOutline, MdMoreHoriz, MdLogout } from "react-icons/md";
 import { BiHome } from "react-icons/bi";
 import { HiOutlineUser } from "react-icons/hi";
 import { IoNotificationsOutline } from "react-icons/io5";
@@ -65,22 +65,24 @@ const Sidebar = ({ user, unreadNotifications }) => {
             ref={logoutModalRef}
             className="absolute dark:bg-main-dark-bg dark:text-white flex-col justify-center items-start gap-2 bottom-20 right-2 border-2 shadow-md lg:rounded-md bg-white py-4"
           >
-            <p>
+            <div>
               <Link
-                className="flex items-center py-2 lg:p-2 hover-effect rounded-none"
+                className="flex gap-2 items-center py-2 lg:p-2 hover-effect rounded-none"
                 to={user.username}
               >
+                <HiOutlineUser />
                 Profile
               </Link>
-            </p>
-            <p>
+            </div>
+            <div className="flex gap-2">
               <button
-                className="flex items-center lg:p-2 hover-effect rounded-none"
+                className="flex gap-2 items-center lg:p-2 hover-effect rounded-none"
                 onClick={logoutHandler}
               >
+                <MdLogout />
                 Logout
               </button>
-            </p>
+            </div>
           </div>
         )}
         <div

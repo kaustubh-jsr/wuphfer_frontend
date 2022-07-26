@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsDot } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { BookmarkButton, LikeButton, RetweetButton } from "../Buttons";
 import { AiOutlineRetweet } from "react-icons/ai";
@@ -44,15 +44,25 @@ const Post = ({ post }) => {
       </div>
       <div className="flex flex-col gap-1 w-full">
         {post.is_retweet && (
-          <p className="text-sm font-medium text-gray-500">
+          <Link
+            to={post.retweeted_by_username}
+            className="text-sm font-medium text-gray-500 hover:underline"
+            onClick={(e) => e.stopPropagation()}
+          >
             {post.retweeted_by_username === post.current_user_username
               ? "You"
               : post.retweeted_by_fullname}{" "}
             rewuphfed
-          </p>
+          </Link>
         )}
         <div className="flex justify-start flex-wrap sm:gap-1">
-          <h4 className="font-bold">{post.user.full_name}</h4>
+          <Link
+            to={post.user.username}
+            className="font-bold hover:underline"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {post.user.full_name}
+          </Link>
           <p className="text-gray-500">@{post.user.username}</p>
 
           <p className="flex items-center">
