@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { bookmarkActions } from "../../redux/slices/bookmarkSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getBookmarks } from "../../api/homePage";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 
 const Bookmarks = () => {
   const { bookmarks } = useSelector((state) => state.bookmark);
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-
+  useDocumentTitle("Bookmarks / Wuphfer");
   useEffect(() => {
     (async () => {
       const resp = await getBookmarks(token);

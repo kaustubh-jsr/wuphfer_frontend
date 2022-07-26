@@ -65,9 +65,16 @@ const OtherUserWidget = ({ otherUser }) => {
       </div>
       <button
         onClick={followUnfollowHandler}
-        className="px-4 py-1 rounded-2xl font-bold bg-black text-white dark:bg-white dark:text-black"
+        className="px-4 py-1 min-w-[5rem] rounded-2xl font-bold bg-black text-white dark:bg-white dark:text-black"
+        disabled={loading}
       >
-        {loading ? <CircularProgress /> : followedByMe ? "Unfollow" : "Follow"}
+        {loading ? (
+          <CircularProgress size={20} />
+        ) : followedByMe ? (
+          "Unfollow"
+        ) : (
+          "Follow"
+        )}
       </button>
     </div>
   );

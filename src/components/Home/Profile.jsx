@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BiCalendar } from "react-icons/bi";
+import { BiCalendar, BiLink } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import {
   Link,
@@ -18,7 +18,8 @@ import EditProfileModal from "./EditProfileModal";
 import moment from "moment";
 import { CircularProgress } from "@mui/material";
 import ProfileTabLink from "./ProfileTabLink";
-import toast from "react-hot-toast";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+
 const Profile = () => {
   const { token, isAuthenticated } = useSelector((state) => state.auth);
   const user = useOutletContext();
@@ -28,7 +29,7 @@ const Profile = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [btnLoading, setBtnLoading] = useState(false);
-
+  useDocumentTitle(`${profileUser?.full_name} / Wuphfer`);
   useEffect(() => {
     if (!isAuthenticated) {
       navigate("/auth", { state: { from: location } });
@@ -56,6 +57,7 @@ const Profile = () => {
             username: profile_user_details.username,
             email: profile_user_details.email,
             bio: profile_user_details.bio,
+            website: profile_user_details.website,
             doj: moment(profile_user_details.doj).format("MMMM Do YYYY"),
             num_of_followers: profile_user_details.num_of_followers,
             num_of_following: profile_user_details.num_of_following,
@@ -70,10 +72,10 @@ const Profile = () => {
             username: username,
           });
         }
+        setLoading(false);
       };
 
       getUserProfile();
-      setLoading(false);
     }
 
     // if no such user exists display no such user @username
@@ -162,9 +164,24 @@ const Profile = () => {
             {/* Bio */}
             <p>{profileUser.bio}</p>
             {/* date of joining */}
-            <div className="flex gap-2 text-gray-500 dark:text-gray-300 items-center">
-              <BiCalendar />
-              <p>Joined {profileUser.doj}</p>
+            <div className="flex gap-4 text-gray-500 dark:text-gray-300 items-center">
+              {profileUser.website && (
+                <div className="flex gap-1 items-center">
+                  <BiLink />
+                  <a
+                    href={`https://${profileUser.website}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    {profileUser.website}
+                  </a>
+                </div>
+              )}
+              <div className="flex gap-1 items-center">
+                <BiCalendar />
+                <p>Joined {profileUser.doj}</p>
+              </div>
             </div>
             {/* Followers Following */}
             <div className="flex gap-4">
@@ -211,7 +228,9 @@ const Profile = () => {
       />
     </div>
   ) : loading ? (
-    <CircularProgress />
+    <div className="flex justify-center mt-4">
+      <CircularProgress />
+    </div>
   ) : (
     <div className="flex flex-col justify-center items-center w-screen">
       <h2 className="flex ml-48 text-xl font-bold w-full">

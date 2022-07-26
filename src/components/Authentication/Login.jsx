@@ -27,15 +27,23 @@ const Login = () => {
 
   const loginFormHandler = (e) => {
     e.preventDefault();
-    setLoading(true);
     let formData = new FormData(e.target);
     formData.append("password", password);
     dispatch(
-      login(formData, () => {
-        navigate("/", { replace: true });
-      })
+      login(
+        formData,
+        () => {
+          navigate("/", { replace: true });
+        },
+        setLoading
+      )
     );
-    setLoading(false);
+  };
+
+  const fillTestCredentials = (e) => {
+    e.preventDefault();
+    setEmail("kaustubhp.jsr@gmail.com");
+    setPassword("testpassword");
   };
   return (
     <>
@@ -96,7 +104,10 @@ const Login = () => {
               "Login"
             )}
           </button>
-          <button className="w-full rounded-md bg-white text-sky-500 border-2 transition duration-200 ease-out border-sky-500 hover:bg-sky-400 hover:text-white py-1">
+          <button
+            onClick={fillTestCredentials}
+            className="w-full rounded-md bg-white text-sky-500 border-2 transition duration-200 ease-out border-sky-500 hover:bg-sky-400 hover:text-white py-1"
+          >
             Use Test Credentials
           </button>
         </form>

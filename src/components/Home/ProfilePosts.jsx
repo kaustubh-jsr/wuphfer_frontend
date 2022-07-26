@@ -32,8 +32,12 @@ const ProfilePosts = () => {
           value={100}
           className="mx-auto mt-8"
         />
-      ) : (
+      ) : profilePosts.length ? (
         profilePosts.map((post) => <Post key={post.id} post={post} />)
+      ) : (
+        <p className="flex justify-center font-normal text-lg pt-4">
+          No posts here yet
+        </p>
       )}
     </div>
   );

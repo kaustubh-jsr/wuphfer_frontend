@@ -5,6 +5,7 @@ import { useOutletContext } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFeedPostsFromDB } from "../../redux/asyncActions/feedActions";
 import { CircularProgress } from "@mui/material";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 const Feed = () => {
   const { posts } = useSelector((state) => state.feed);
   const { token, isAuthenticated } = useSelector((state) => state.auth);
@@ -15,12 +16,11 @@ const Feed = () => {
   const user = useOutletContext();
   const [currentPostContent, setCurrentPostContent] = useState("");
   const [loading, setLoading] = useState(true);
-
+  useDocumentTitle("Home / Wuphfer");
   useEffect(() => {
     // retreive user feed from backend and update it in store
     if (isAuthenticated) {
-      dispatch(setFeedPostsFromDB(token));
-      setLoading(false);
+      dispatch(setFeedPostsFromDB(token, setLoading));
     }
   }, [dispatch, token, isAuthenticated]);
 
@@ -55,9 +55,14 @@ const Feed = () => {
         // setPosts={setPosts}
       />
       <div className="pb-72">
-        {posts.map((post) => (
-          <Post key={post.id} post={post} />
-        ))}
+        {posts.length ? (
+          posts.map((post) => <Post key={post.id} post={post} />)
+        ) : (
+          <p className="flex justify-center font-normal text-lg pt-8">
+            Your feed is empty, start following people to see their wuphfs in
+            your feed
+          </p>
+        )}
       </div>
     </>
   );

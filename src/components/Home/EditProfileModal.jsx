@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { uploadMedia } from "../../api";
 import { updateUserProfile as updateUserProfileApi } from "../../api/homePage";
+import { CloseButtonIcon } from "../Buttons";
 
 const EditProfileModal = ({
   showEditModal,
@@ -19,6 +20,7 @@ const EditProfileModal = ({
   const [firstName, setFirstName] = useState(user.first_name);
   const [lastName, setLastName] = useState(user.last_name);
   const [bio, setBio] = useState(user.bio);
+  const [website, setWebsite] = useState(user.website);
   const [loading, setLoading] = useState(false);
   const avatarPickerRef = useRef();
   const coverPickerRef = useRef();
@@ -32,6 +34,7 @@ const EditProfileModal = ({
     formData.append("profile_image", profileImage);
     formData.append("cover_image", coverImage);
     formData.append("bio", bio);
+    formData.append("website", website);
     const submitProfileForm = async (formData) => {
       const resp = await updateUserProfileApi(token, formData);
       if (resp?.status === "ok") {
@@ -51,6 +54,7 @@ const EditProfileModal = ({
       profile_image: profileImage,
       cover_image: coverImage,
       bio: bio,
+      website: website,
     }));
     navigate(`/${user.username}`);
   };
@@ -61,6 +65,7 @@ const EditProfileModal = ({
     setFirstName(user.first_name);
     setLastName(user.last_name);
     setBio(user.bio);
+    setWebsite(user.website);
     setShowEditModal(false);
   };
 
@@ -109,31 +114,10 @@ const EditProfileModal = ({
                   onClick={closeModalWithoutSaving}
                   className="focus:outline-none"
                 >
-                  <svg
-                    width={28}
-                    height={28}
-                    viewBox="0 0 28 28"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M21 7L7 21"
-                      stroke="#A1A1AA"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M7 7L21 21"
-                      stroke="#A1A1AA"
-                      strokeWidth="1.75"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <CloseButtonIcon />
                 </button>
               </div>
-              <div className="flex-col md:pb-4 pb-7">
+              <div className="flex-col md:pb-4 pb-7 max-h-[36rem] overflow-auto">
                 <div className="flex items-center justify-center">
                   <div className="flex flex-col w-full">
                     {/* cover image */}
@@ -203,6 +187,13 @@ const EditProfileModal = ({
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
                       />
+                      <input
+                        type="text"
+                        className="border-2 py-2 px-1 focus:border-sky-400 rounded-lg bg-transparent"
+                        placeholder="Website"
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                      />
                     </form>
                   </div>
                 </div>
@@ -211,6 +202,7 @@ const EditProfileModal = ({
                   <button
                     onClick={saveProfileHandler}
                     className="w-24 py-2 px-4 border-2 rounded-full font-bold dark:bg-main-dark-bg hover:bg-slate-200 dark:hover:bg-slate-700"
+                    disabled={loading}
                   >
                     {loading ? (
                       <CircularProgress sx={{ color: "black" }} size={18} />

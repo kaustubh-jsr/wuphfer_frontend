@@ -38,7 +38,7 @@ const ProfileMedia = () => {
         mediaPosts.map((post) => <Post key={post.id} post={post} />)
       ) : (
         <p className="flex justify-center font-normal text-lg pt-4">
-          Your media posts will show up here
+          Media posts will show up here
         </p>
       )}
     </div>

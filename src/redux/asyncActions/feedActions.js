@@ -38,7 +38,7 @@ export const postAdded = (token, newPost) => async (dispatch) => {
   }
 };
 
-export const setFeedPostsFromDB = (token) => async (dispatch) => {
+export const setFeedPostsFromDB = (token, setLoading) => async (dispatch) => {
   try {
     const resp = await getFeedPostsApi(token);
     if (resp.status === 200) {
@@ -50,6 +50,8 @@ export const setFeedPostsFromDB = (token) => async (dispatch) => {
     }
   } catch (e) {
     console.error(e);
+  } finally {
+    setLoading(false);
   }
 };
 

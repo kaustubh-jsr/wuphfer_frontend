@@ -5,8 +5,8 @@ import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { SinglePostView } from "./SinglePostView";
 import { useSelector } from "react-redux";
 import { getPostDetail as getPostDetailApi } from "../../api/homePage";
-import toast from "react-hot-toast";
 import { CircularProgress } from "@mui/material";
+import { useDocumentTitle } from "../../hooks/useDocumentTitle";
 // component renders the single post with all details and comments
 //  on that post
 const PostDetail = () => {
@@ -22,6 +22,7 @@ const PostDetail = () => {
   const [post, setPost] = useState();
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([]);
+  useDocumentTitle("Wuphf / Wuphfer");
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
