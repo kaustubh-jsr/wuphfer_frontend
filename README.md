@@ -1,70 +1,89 @@
-# Wuphfer Frontend - (Twitter Clone)
+# Wuphfer Frontend (Twitter Clone)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Wuphfer Frontend - A real time twitter clone built in React/Redux-Toolkit and TailwindCSS.
+The API for this client is developed in Python/Django. [Backend API Repo](https://github.com/kaustubh-jsr/wuphfer_backend)
 
-## Available Scripts
+## Demo
 
-In the project directory, you can run:
+### Real Time Notifications
 
-### `npm start`
+https://user-images.githubusercontent.com/94971261/181216288-ebb265ae-e075-42e6-a0e4-c0fe73facb89.mp4
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Dark Mode
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+https://user-images.githubusercontent.com/94971261/181219589-f5086d35-bd06-4c30-9457-964df3dccdba.mp4
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The app has the following major features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### User:
 
-### `npm run eject`
+- Create Account
+- See Profile
+- Login
+- Logout
+- Edit Profile
+- Follow User
+- Unfollow User
+- Edit Profile (Change Avatar, Cover Image, Bio, Website)
+- Light/dark mode toggle
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Posts:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Create Post
+- Bookmark Post
+- Like/Unlike Post
+- Comment on Post
+- Like/Unlike Comment
+- Retweet Post
+- Error toast on reaction(like/comment/retweet) on deleted post
+- Notification on reaction(like/comment/retweet) to post/comment
+- See Post Likes
+- See Post Retweets
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Pages
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Home (Feed)
+- Profile (Self/Non Follower/Follower)
+- Notifications
+- Bookmarks
+- Explore
 
-## Learn More
+## Tech Stack
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Client:** React, Redux Toolkit, TailwindCSS
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Server:** Python, Django, Channels, Redis-server
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Run Locally
 
-### Analyzing the Bundle Size
+Clone this project, and also clone the [API repo](https://github.com/kaustubh-jsr/wuphfer_backend) this project utilises for backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+  git clone https://github.com/kaustubh-jsr/wuphfer_frontend.git
+```
 
-### Making a Progressive Web App
+Go to the project directory
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+  cd wuphfer_frontend
+```
 
-### Advanced Configuration
+Install dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+  npm install
+```
 
-### Deployment
+Start the server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+  npm run start
+```
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
