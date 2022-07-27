@@ -45,3 +45,32 @@ The app has the following major features
 **Client:** React, Redux Toolkit, TailwindCSS
 
 **Server:** Python, Django, Channels, Redis-server
+
+
+## Run Locally
+
+Clone this project, and also clone the [API repo](https://github.com/kaustubh-jsr/wuphfer_backend) this project utilises for backend
+
+```bash
+  git clone https://github.com/kaustubh-jsr/wuphfer_frontend.git
+```
+
+Go to the project directory
+
+```bash
+  cd wuphfer_frontend
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run start
+```
+
+
