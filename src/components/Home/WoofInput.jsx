@@ -205,7 +205,7 @@ const WoofInput = ({
               className="disabled:cursor-not-allowed disabled:bg-sky-400 disabled:opacity-50 flex w-24 rounded-full justify-center itms-center py-1 bg-sky-500 hover:bg-sky-600 transition duration-200 ease-out text-white font-bold"
               onClick={sendPost}
             >
-              Woof
+              Wuphf
             </button>
           </div>
         )}

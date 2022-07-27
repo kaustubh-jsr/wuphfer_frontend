@@ -45,7 +45,7 @@ const Post = ({ post }) => {
       <div className="flex flex-col gap-1 w-full">
         {post.is_retweet && (
           <Link
-            to={post.retweeted_by_username}
+            to={`/${post.retweeted_by_username}`}
             className="text-sm font-medium text-gray-500 hover:underline"
             onClick={(e) => e.stopPropagation()}
           >
@@ -57,7 +57,7 @@ const Post = ({ post }) => {
         )}
         <div className="flex justify-start flex-wrap sm:gap-1">
           <Link
-            to={post.user.username}
+            to={`/${post.user.username}`}
             className="font-bold hover:underline"
             onClick={(e) => e.stopPropagation()}
           >

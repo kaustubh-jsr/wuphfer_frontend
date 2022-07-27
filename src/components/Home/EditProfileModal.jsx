@@ -188,7 +188,7 @@ const EditProfileModal = ({
                         onChange={(e) => setBio(e.target.value)}
                       />
                       <input
-                        type="text"
+                        type="url"
                         className="border-2 py-2 px-1 focus:border-sky-400 rounded-lg bg-transparent"
                         placeholder="Website"
                         value={website}

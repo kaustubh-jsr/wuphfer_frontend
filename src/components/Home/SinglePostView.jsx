@@ -4,6 +4,7 @@ import { AiOutlineRetweet } from "react-icons/ai";
 
 import moment from "moment";
 import { BookmarkButton, LikeButton, RetweetButton } from "../Buttons";
+import { Link } from "react-router-dom";
 const SinglePostView = ({ post }) => {
   const [isBookmarked, setIsBookmarked] = useState(post.is_bookmark);
   const [postDetailLikesCount, setPostDetailLikesCount] = useState(post.likes);
@@ -17,12 +18,15 @@ const SinglePostView = ({ post }) => {
       {post.is_retweet && (
         <div className="flex gap-2 pb-2">
           <AiOutlineRetweet className="w-[15px] h-[15px] text-gray-500 mb-2" />
-          <p className="text-sm font-medium text-gray-500">
+          <Link
+            to={`/${post.retweeted_by_username}`}
+            className="text-sm font-medium text-gray-500 hover:underline"
+          >
             {post.retweeted_by_username === post.current_user_username
               ? "You"
               : post.retweeted_by_fullname}{" "}
             rewuphfed
-          </p>
+          </Link>
         </div>
       )}
       <div className="flex mb-4">
@@ -32,7 +36,12 @@ const SinglePostView = ({ post }) => {
           className="h-14 w-14 rounded-full mr-4"
         />
         <div className={`${postPage && "gap-0 flex-col"} flex gap-1`}>
-          <h4 className="font-bold">{post.user.full_name}</h4>
+          <Link
+            to={`/${post.user.username}`}
+            className="font-bold hover:underline"
+          >
+            {post.user.full_name}
+          </Link>
           <p className="text-gray-500">@{post.user.username}</p>
         </div>
       </div>
@@ -60,11 +69,13 @@ const SinglePostView = ({ post }) => {
         <div className="flex gap-4 border-y border-light-border dark:border-dark-border py-2 my-2">
           <div className="flex gap-1">
             <h6 className="font-semibold">{postDetailSharesCount}</h6>
-            <p className="text-gray-800 dark:text-gray-400">Retweets</p>
+            <p className="text-gray-800 dark:text-gray-400">
+              {postDetailSharesCount === 1 ? "Rewuphf" : "Rewuphfs"}
+            </p>
           </div>
           <div className="flex gap-1">
             <h6 className="font-semibold">{postDetailLikesCount}</h6>
-            <p className="text-gray-800 dark:text-gray-400 cursor-pointer hover:underline">
+            <p className="text-gray-800 dark:text-gray-400">
               {postDetailLikesCount === 1 ? "Like" : "Likes"}
             </p>
           </div>
