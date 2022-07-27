@@ -3,9 +3,22 @@
 Wuphfer Frontend - A real time twitter clone built in React/Redux-Toolkit and TailwindCSS.
 The API for this client is developed in Python/Django. [Backend API Repo](https://github.com/kaustubh-jsr/wuphfer_backend)
 
+## Demo
+
+### Real Time Notifications
+
+https://user-images.githubusercontent.com/94971261/181216288-ebb265ae-e075-42e6-a0e4-c0fe73facb89.mp4
+
+### Dark Mode
+
+
+https://user-images.githubusercontent.com/94971261/181219589-f5086d35-bd06-4c30-9457-964df3dccdba.mp4
+
+
 ## Features
 
 The app has the following major features
+
 
 ### User:
 
