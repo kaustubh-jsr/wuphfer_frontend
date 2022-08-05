@@ -17,7 +17,6 @@ const ProfileMedia = () => {
       const resp = await getMediaPostsApi(token, username);
       if (resp.status === 200) {
         setMediaPosts(resp.data.mediaPosts);
-        console.log(resp.data.mediaPosts);
       } else {
         toast.error(resp.data.message);
       }

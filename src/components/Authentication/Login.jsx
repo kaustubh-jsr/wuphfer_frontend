@@ -40,9 +40,14 @@ const Login = () => {
     );
   };
 
-  const fillTestCredentials = (e) => {
+  const fillTestCredentials1 = (e) => {
     e.preventDefault();
     setEmail("kaustubhp.jsr@gmail.com");
+    setPassword("testpassword");
+  };
+  const fillTestCredentials2 = (e) => {
+    e.preventDefault();
+    setEmail("keshavdv718@gmail.com");
     setPassword("testpassword");
   };
   return (
@@ -105,10 +110,16 @@ const Login = () => {
             )}
           </button>
           <button
-            onClick={fillTestCredentials}
+            onClick={fillTestCredentials1}
             className="w-full rounded-md bg-white text-sky-500 border-2 transition duration-200 ease-out border-sky-500 hover:bg-sky-400 hover:text-white py-1"
           >
-            Use Test Credentials
+            Use Test Credentials 1
+          </button>
+          <button
+            onClick={fillTestCredentials2}
+            className="w-full rounded-md bg-white text-sky-500 border-2 transition duration-200 ease-out border-sky-500 hover:bg-sky-400 hover:text-white py-1"
+          >
+            Use Test Credentials 2
           </button>
         </form>
       </div>
