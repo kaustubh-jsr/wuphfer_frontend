@@ -19,22 +19,60 @@ const EditProfileModal = ({
   const [coverImage, setCoverImage] = useState(user.cover_image);
   const [firstName, setFirstName] = useState(user.first_name);
   const [lastName, setLastName] = useState(user.last_name);
-  const [bio, setBio] = useState(user.bio);
-  const [website, setWebsite] = useState(user.website);
+  const [bio, setBio] = useState(user.bio ?? "");
+  const [website, setWebsite] = useState(user.website ?? "");
+  const [formErrors, setFormErrors] = useState({
+    firstNameError: "",
+    lastNameError: "",
+    websiteError: "",
+  });
   const [loading, setLoading] = useState(false);
   const avatarPickerRef = useRef();
   const coverPickerRef = useRef();
   const navigate = useNavigate();
+
+  const isValidProfileData = (firstName, lastName, bio, website) => {
+    if (!firstName.trim()) {
+      setFormErrors((prev) => ({
+        ...prev,
+        lastNameError: "",
+        website: "",
+        firstNameError: "First Name cannot be empty",
+      }));
+      toast.error("First Name cannot be empty");
+      return false;
+    } else if (!lastName.trim()) {
+      setFormErrors((prev) => ({
+        ...prev,
+        firstNameError: "",
+        website: "",
+        lastNameError: "Last Name cannot be empty",
+      }));
+      toast.error("Last Name cannot be empty");
+      return false;
+    }
+    setFormErrors((prev) => ({
+      ...prev,
+      firstNameError: "",
+      lastNameError: "",
+      websiteError: "",
+    }));
+    return true;
+  };
   const saveProfileHandler = async () => {
     // api call to save
     setLoading(true);
+    if (!isValidProfileData(firstName, lastName, bio, website)) {
+      setLoading(false);
+      return;
+    }
     const formData = new FormData();
-    formData.append("first_name", firstName);
-    formData.append("last_name", lastName ? lastName : "");
+    formData.append("first_name", firstName.trim());
+    formData.append("last_name", lastName.trim());
     formData.append("profile_image", profileImage);
     formData.append("cover_image", coverImage);
     formData.append("bio", bio);
-    formData.append("website", website);
+    formData.append("website", website ? website.trim() : "");
     const submitProfileForm = async (formData) => {
       const resp = await updateUserProfileApi(token, formData);
       if (resp?.status === "ok") {
@@ -53,7 +91,7 @@ const EditProfileModal = ({
       full_name: firstName + " " + (lastName ? lastName : ""),
       profile_image: profileImage,
       cover_image: coverImage,
-      bio: bio,
+      bio: bio ?? "",
       website: website,
     }));
     navigate(`/${user.username}`);
@@ -64,7 +102,7 @@ const EditProfileModal = ({
     setCoverImage(user.cover_image);
     setFirstName(user.first_name);
     setLastName(user.last_name);
-    setBio(user.bio);
+    setBio(user.bio ?? "");
     setWebsite(user.website);
     setShowEditModal(false);
   };
@@ -169,14 +207,18 @@ const EditProfileModal = ({
                     <form className="flex flex-col gap-2 px-4">
                       <input
                         type="text"
-                        className="border-2 py-2 px-1 focus:border-sky-400 rounded-lg bg-transparent"
+                        className={`border-2 py-2 px-1 focus:border-sky-400 rounded-lg bg-transparent ${
+                          formErrors.firstNameError && "border-red-400"
+                        }`}
                         placeholder="First Name"
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                       />
                       <input
                         type="text"
-                        className="border-2 py-2 px-1 focus:border-sky-400 rounded-lg bg-transparent"
+                        className={`border-2 py-2 px-1 focus:border-sky-400 rounded-lg bg-transparent ${
+                          formErrors.lastNameError && "border-red-400"
+                        }`}
                         placeholder="Last Name"
                         value={lastName}
                         onChange={(e) => setLastName(e.target.value)}
@@ -190,7 +232,7 @@ const EditProfileModal = ({
                       <input
                         type="url"
                         className="border-2 py-2 px-1 focus:border-sky-400 rounded-lg bg-transparent"
-                        placeholder="Website"
+                        placeholder="Website (Eg: yourdomain.com)"
                         value={website}
                         onChange={(e) => setWebsite(e.target.value)}
                       />

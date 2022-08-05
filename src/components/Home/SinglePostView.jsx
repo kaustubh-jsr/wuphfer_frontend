@@ -50,11 +50,13 @@ const SinglePostView = ({ post }) => {
           {post.content}
 
           {Boolean(post.is_media) ? (
-            <img
-              src={post.image}
-              alt="post"
-              className="rounded-2xl max-h-80 object-contain"
-            />
+            <div className="flex mt-2">
+              <img
+                src={post.image}
+                alt="post"
+                className="rounded-2xl max-h-screen object-contain"
+              />
+            </div>
           ) : (
             <span></span>
           )}

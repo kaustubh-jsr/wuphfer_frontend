@@ -420,3 +420,25 @@ export const repostUndoRepost = async (token, post) => {
     return { status: "failed" };
   }
 };
+
+export const getAllPosts = async (token) => {
+  try {
+    const resp = await apiClient({
+      method: "GET",
+      url: `${BASE_URL}/get_all_posts`,
+      headers: {
+        "Auth-token": token,
+      },
+    });
+    return resp.data;
+  } catch (e) {
+    toast.error(e.response.data.message, {
+      position: "bottom-center",
+      duration: 5000,
+      style: {
+        color: "white",
+        backgroundColor: "rgb(14, 165, 233)",
+      },
+    });
+  }
+};

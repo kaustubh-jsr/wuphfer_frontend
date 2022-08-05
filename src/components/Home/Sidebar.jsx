@@ -41,17 +41,17 @@ const Sidebar = ({ user, unreadNotifications }) => {
           <p className="text-lg font-normal">Explore</p>
         </div> */}
         <SidebarLink text="Explore" Icon={FaHashtag} path="/explore" />
-        <SidebarLink text="Profile Viewers" Icon={FaEye} />
+        {/* <SidebarLink text="Profile Viewers" Icon={FaEye} /> */}
         <SidebarLink
           text="Notifications"
           Icon={IoNotificationsOutline}
           unread={unreadNotifications}
           path="/notifications"
         />
-        <SidebarLink text="Messages" Icon={MdMailOutline} />
+        {/* <SidebarLink text="Messages" Icon={MdMailOutline} /> */}
         <SidebarLink text="Bookmarks" Icon={FaRegBookmark} path="/bookmarks" />
         <SidebarLink text="Profile" Icon={HiOutlineUser} path={user.username} />
-        <SidebarLink text="More" Icon={CgMoreO} />
+        {/* <SidebarLink text="More" Icon={CgMoreO} /> */}
 
         <div className="mt-2 hidden xl:inline">
           <button className="flex w-44 rounded-full justify-center itms-center py-3 bg-sky-500 hover:bg-sky-600 transition duration-200 ease-out text-white font-bold">

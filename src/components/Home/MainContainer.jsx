@@ -20,11 +20,13 @@ const MainContainer = ({ user }) => {
     if (location.pathname === "/") {
       setContainerTitle("Home");
     } else if (location.pathname.split("/")[2] === "status") {
-      setContainerTitle("Tweet");
+      setContainerTitle("Wuphf");
     } else if (location.pathname.split("/")[1] === "notifications") {
       setContainerTitle("Notifications");
     } else if (location.pathname.split("/")[1] === "bookmarks") {
       setContainerTitle("Bookmarks");
+    } else if (location.pathname.split("/")[1] === "explore") {
+      setContainerTitle("Explore");
     } else {
       setContainerTitle("Profile");
     }
