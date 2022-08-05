@@ -7,12 +7,13 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { CgMoreO } from "react-icons/cg";
 import SidebarLink from "./SidebarLink";
 import useClickOutside from "../../hooks/useClickOutside";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/asyncActions/authActions";
 import { feedActions } from "../../redux/slices/feedSlice";
 import { MaterialSymbolsSoundDetectionDogBarking } from "../../hooks/logo";
 const Sidebar = ({ user, unreadNotifications }) => {
+  const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const logoutModalRef = useRef();
   const dispatch = useDispatch();
@@ -54,7 +55,10 @@ const Sidebar = ({ user, unreadNotifications }) => {
         {/* <SidebarLink text="More" Icon={CgMoreO} /> */}
 
         <div className="mt-2 hidden xl:inline">
-          <button className="flex w-44 rounded-full justify-center itms-center py-3 bg-sky-500 hover:bg-sky-600 transition duration-200 ease-out text-white font-bold">
+          <button
+            onClick={() => navigate("/")}
+            className="flex w-44 rounded-full justify-center itms-center py-3 bg-sky-500 hover:bg-sky-600 transition duration-200 ease-out text-white font-bold"
+          >
             Wuphf
           </button>
         </div>
