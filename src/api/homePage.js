@@ -417,7 +417,7 @@ export const repostUndoRepost = async (token, post) => {
         backgroundColor: "rgb(14, 165, 233)",
       },
     });
-    return { status: "failed" };
+    return e.response.data;
   }
 };
 
@@ -440,5 +440,31 @@ export const getAllPosts = async (token) => {
         backgroundColor: "rgb(14, 165, 233)",
       },
     });
+  }
+};
+
+export const deletePost = async (token, post) => {
+  try {
+    const formData = new FormData();
+    formData.append("post_id", post.id);
+    const resp = await apiClient({
+      method: "POST",
+      url: `${BASE_URL}/delete_post`,
+      headers: {
+        "Auth-token": token,
+      },
+      data: formData,
+    });
+    return resp;
+  } catch (e) {
+    toast.error(e.response.data.message, {
+      position: "bottom-center",
+      duration: 5000,
+      style: {
+        color: "white",
+        backgroundColor: "rgb(14, 165, 233)",
+      },
+    });
+    return { status: "failed" };
   }
 };

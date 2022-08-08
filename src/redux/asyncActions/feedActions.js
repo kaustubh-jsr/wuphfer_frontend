@@ -4,6 +4,7 @@ import {
   bookmarkUnbookmarkPost as bookmarkUnbookmarkPostApi,
   getFeedPosts as getFeedPostsApi,
   markNotificationsRead as markNotificationsReadApi,
+  deletePost as deletePostApi,
 } from "../../api/homePage";
 import { bookmarkActions } from "../slices/bookmarkSlice";
 import { feedActions } from "../slices/feedSlice";
@@ -27,6 +28,7 @@ export const postAdded = (token, newPost) => async (dispatch) => {
         timestamp: resp.data.new_post.timestamp,
         id: resp.data.new_post.id,
         isBookmark: resp.data.new_post.is_bookmark,
+        current_user_username: resp.data.new_post.current_user_username,
       };
       dispatch(feedActions.postAdded({ newPost }));
       // callback()
@@ -70,7 +72,7 @@ export const bookmarkPost = (token, post) => async (dispatch) => {
       } else {
         dispatch(bookmarkActions.addBookmark({ post: resp.data.post }));
       }
-      toast.success(resp.data.message, {
+      toast.success(resp.message, {
         position: "bottom-center",
         duration: 5000,
         style: {
@@ -93,6 +95,27 @@ export const markNotificationsRead = (token) => async (dispatch) => {
       dispatch(feedActions.notificationsRead({ notificationsRead: true }));
     } else {
       console.error("Problem updating notification read status.");
+    }
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const deletePost = (token, post) => async (dispatch) => {
+  try {
+    const resp = await deletePostApi(token, post);
+    if (resp.status === 200) {
+      dispatch(feedActions.deletePost({ post_id: post.id }));
+      toast.success(resp.data.message, {
+        position: "bottom-center",
+        duration: 5000,
+        style: {
+          color: "white",
+          backgroundColor: "rgb(14, 165, 233)",
+        },
+      });
+    } else {
+      console.error("Problem deleting wuphf.");
     }
   } catch (e) {
     console.error(e);

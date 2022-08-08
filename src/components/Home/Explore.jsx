@@ -32,7 +32,14 @@ const Explore = () => {
           />
         </div>
       ) : explorePosts.length ? (
-        explorePosts.map((post) => <Post key={post.id} post={post} />)
+        explorePosts.map((post) => (
+          <Post
+            key={post.id}
+            post={post}
+            page="explore"
+            setPosts={setExplorePosts}
+          />
+        ))
       ) : (
         <p className="flex justify-center font-normal text-lg pt-8">
           Your explore page is empty, wuphfs will appear as people start

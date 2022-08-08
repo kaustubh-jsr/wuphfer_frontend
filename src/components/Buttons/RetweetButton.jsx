@@ -35,23 +35,23 @@ const RetweetButton = ({
 
     // call the api to set the changes to DB
     (async () => {
-      const { message, retweetStatus, totalShares } = await repostUndoRepostApi(
-        token,
-        post
-      );
+      const { status, message, retweetStatus, totalShares } =
+        await repostUndoRepostApi(token, post);
       // update the UI from the DB now, so that everything is in sync with DB
       setRetweetCount(totalShares);
       if (isSinglePostView) {
         setPostDetailSharesCount(totalShares);
       }
-      toast.success(message, {
-        position: "bottom-center",
-        duration: 5000,
-        style: {
-          color: "white",
-          backgroundColor: "rgb(14, 165, 233)",
-        },
-      });
+      if (status === 200) {
+        toast.success(message, {
+          position: "bottom-center",
+          duration: 5000,
+          style: {
+            color: "white",
+            backgroundColor: "rgb(14, 165, 233)",
+          },
+        });
+      }
       setIsRetweetByMe(retweetStatus === "retweeted");
     })();
 

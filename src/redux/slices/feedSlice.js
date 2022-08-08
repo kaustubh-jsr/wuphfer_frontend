@@ -56,6 +56,9 @@ const feedSlice = createSlice({
         post.share_count -= 1;
       }
     },
+    deletePost(state, { payload }) {
+      state.posts = state.posts.filter((post) => post.id !== payload.post_id);
+    },
   },
 });
 

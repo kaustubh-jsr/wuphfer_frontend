@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFeedPostsFromDB } from "../../redux/asyncActions/feedActions";
 import { CircularProgress } from "@mui/material";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import { AnimatePresence } from "framer-motion";
 const Feed = () => {
   const { posts } = useSelector((state) => state.feed);
   const { token, isAuthenticated } = useSelector((state) => state.auth);
@@ -54,7 +55,7 @@ const Feed = () => {
         isComment={false}
         // setPosts={setPosts}
       />
-      <div className="pb-72">
+      <AnimatePresence className="pb-72">
         {posts.length ? (
           posts.map((post) => <Post key={post.id} post={post} />)
         ) : (
@@ -63,7 +64,7 @@ const Feed = () => {
             your feed
           </p>
         )}
-      </div>
+      </AnimatePresence>
     </>
   );
 };

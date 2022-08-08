@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { BsDot } from "react-icons/bs";
+import React, { useEffect, useRef, useState } from "react";
+import { BsDot, BsThreeDots } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 import { BookmarkButton, LikeButton, RetweetButton } from "../Buttons";
 import { AiOutlineRetweet } from "react-icons/ai";
-const Post = ({ post }) => {
+import DeleteTweetDialog from "./DeleteTweetDialog";
+import useClickOutside from "../../hooks/useClickOutside";
+import { motion } from "framer-motion";
+const Post = ({ post, page, setPosts }) => {
   //IMP INFO For Retweet States :
   // Retweet states need to be in this parent component, instead of localizing
   // in the retweet button, like we did for the like button, because
@@ -19,8 +22,18 @@ const Post = ({ post }) => {
   // be shown above the tweet, the below state, is for whether the retweet btn
   // should be active or not.Both states coincide when user encounters his own retweet
   // const [isRetweetByMe, setIsRetweetByMe] = useState(post.retweeted_by_me);
+  const deletePostRef = useRef();
   const [isBookmarked, setIsBookmarked] = useState(post.is_bookmark);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const navigate = useNavigate();
+  const handleDeletePost = (e) => {
+    e.stopPropagation();
+    setShowDeleteDialog(true);
+  };
+  const onOutsiteDeleteDialogClick = () => {
+    setShowDeleteDialog(false);
+  };
+  useClickOutside(deletePostRef, onOutsiteDeleteDialogClick);
   let postLink;
   if (post.is_retweet) {
     postLink = `/${post.retweeted_by_username}/status/${post.id}`;
@@ -28,11 +41,17 @@ const Post = ({ post }) => {
     postLink = `/${post.user.username}/status/${post.id}`;
   }
   return (
-    <div
+    <motion.div
+      layout
+      initial={{ opacity: 0, x: 0 }}
+      whileInView={{ opacity: 1 }}
+      exit={{ x: -100, opacity: 0 }}
+      viewport={{ once: true }}
+      transition={{ type: "spring", duration: 0.8, delay: 0 }}
       className="p-3 flex border-b border-light-border dark:border-dark-border duration-200 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800"
       onClick={() => navigate(postLink)}
     >
-      <div className="mr-4 flex flex-col items-end">
+      <motion.div layout className="mr-4 flex flex-col items-end">
         {post.is_retweet && (
           <AiOutlineRetweet className="w-[15px] h-[15px] text-gray-500 mb-2" />
         )}
@@ -41,8 +60,8 @@ const Post = ({ post }) => {
           alt={post.user.username}
           className="h-14 w-14 rounded-full"
         />
-      </div>
-      <div className="flex flex-col gap-1 w-full">
+      </motion.div>
+      <motion.div layout className="flex flex-col gap-1 w-full">
         {post.is_retweet && (
           <Link
             to={`/${post.retweeted_by_username}`}
@@ -72,6 +91,24 @@ const Post = ({ post }) => {
           <p className="text-gray-500">
             {moment(post.timestamp).startOf("second").fromNow()}
           </p>
+          {post.user.username === post.current_user_username &&
+            !post.is_retweet && (
+              <button className="ml-auto" onClick={handleDeletePost}>
+                <BsThreeDots className="hover:bg-light-blue hover:text-blue-500 p-1 h-6 w-6 rounded-full" />
+              </button>
+            )}
+          {post.user.username === post.current_user_username &&
+            !post.is_retweet &&
+            showDeleteDialog && (
+              <div className="relative">
+                <DeleteTweetDialog
+                  deletePostRef={deletePostRef}
+                  post={post}
+                  page={page}
+                  setPosts={setPosts}
+                />
+              </div>
+            )}
         </div>
 
         <div>
@@ -101,8 +138,8 @@ const Post = ({ post }) => {
             setIsBookmarked={setIsBookmarked}
           />
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

@@ -33,7 +33,14 @@ const ProfilePosts = () => {
           className="mx-auto mt-8"
         />
       ) : profilePosts.length ? (
-        profilePosts.map((post) => <Post key={post.id} post={post} />)
+        profilePosts.map((post) => (
+          <Post
+            key={post.id}
+            post={post}
+            page="profile"
+            setPosts={setProfilePosts}
+          />
+        ))
       ) : (
         <p className="flex justify-center font-normal text-lg pt-4">
           No posts here yet

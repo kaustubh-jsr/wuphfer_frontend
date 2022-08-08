@@ -34,7 +34,14 @@ const ProfileMedia = () => {
           className="mx-auto mt-8"
         />
       ) : mediaPosts.length ? (
-        mediaPosts.map((post) => <Post key={post.id} post={post} />)
+        mediaPosts.map((post) => (
+          <Post
+            key={post.id}
+            post={post}
+            page="profile"
+            setPosts={setMediaPosts}
+          />
+        ))
       ) : (
         <p className="flex justify-center font-normal text-lg pt-4">
           Media posts will show up here

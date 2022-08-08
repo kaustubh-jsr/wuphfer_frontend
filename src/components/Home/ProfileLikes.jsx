@@ -34,7 +34,14 @@ const ProfileLikes = () => {
           className="mx-auto mt-8"
         />
       ) : likedPosts.length ? (
-        likedPosts.map((post) => <Post key={post.id} post={post} />)
+        likedPosts.map((post) => (
+          <Post
+            key={post.id}
+            post={post}
+            page="profile"
+            setPosts={setLikedPosts}
+          />
+        ))
       ) : (
         <p className="flex justify-center font-normal text-lg pt-4">
           Liked wuphfs will show up here
