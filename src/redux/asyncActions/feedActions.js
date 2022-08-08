@@ -101,8 +101,9 @@ export const markNotificationsRead = (token) => async (dispatch) => {
   }
 };
 
-export const deletePost = (token, post) => async (dispatch) => {
+export const deletePost = (token, post, setLoading) => async (dispatch) => {
   try {
+    setLoading(true);
     const resp = await deletePostApi(token, post);
     if (resp.status === 200) {
       dispatch(feedActions.deletePost({ post_id: post.id }));
@@ -119,5 +120,7 @@ export const deletePost = (token, post) => async (dispatch) => {
     }
   } catch (e) {
     console.error(e);
+  } finally {
+    setLoading(false);
   }
 };
