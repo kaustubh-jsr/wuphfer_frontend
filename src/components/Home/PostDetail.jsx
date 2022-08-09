@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { getPostDetail as getPostDetailApi } from "../../api/homePage";
 import { CircularProgress } from "@mui/material";
 import { useDocumentTitle } from "../../hooks/useDocumentTitle";
+import { AnimatePresence } from "framer-motion";
 // component renders the single post with all details and comments
 //  on that post
 const PostDetail = () => {
@@ -58,11 +59,16 @@ const PostDetail = () => {
             setComments={setComments}
             parentPostId={post.id}
           />
-
-          {comments &&
-            comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} />
-            ))}
+          <AnimatePresence>
+            {comments &&
+              comments.map((comment) => (
+                <Comment
+                  key={comment.id}
+                  comment={comment}
+                  setComments={setComments}
+                />
+              ))}
+          </AnimatePresence>
 
           {/* <Comment />
           <Comment />

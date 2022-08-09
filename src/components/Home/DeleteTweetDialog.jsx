@@ -3,7 +3,14 @@ import { AiOutlineCheck, AiOutlineDelete } from "react-icons/ai";
 import { deletePost } from "../../redux/asyncActions/feedActions";
 import { useDispatch, useSelector } from "react-redux";
 import { CircularProgress } from "@mui/material";
-const DeleteTweetDialog = ({ deletePostRef, post, page, setPosts }) => {
+const DeleteTweetDialog = ({
+  deletePostRef,
+  post,
+  page,
+  setPosts,
+  isComment,
+  deleteComment,
+}) => {
   const [showConfirmDel, setShowConfirmDel] = useState(false);
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
@@ -12,9 +19,17 @@ const DeleteTweetDialog = ({ deletePostRef, post, page, setPosts }) => {
   const handleDelete = (e) => {
     e.stopPropagation();
     if (showConfirmDel) {
-      dispatch(deletePost(token, post, setLoading));
-      if (page) {
-        setPosts((posts) => posts.filter((tweet) => tweet.id !== post.id));
+      if (isComment) {
+        // if the delete is triggered on comment, call delete comment api, and set the comments on UI
+        setLoading(true);
+        deleteComment();
+        setPosts((prev) => prev.filter((comment) => comment.id !== post.id));
+      } else {
+        // delete is triggered on post, dispatch delete action
+        dispatch(deletePost(token, post, setLoading));
+        if (page) {
+          setPosts((posts) => posts.filter((tweet) => tweet.id !== post.id));
+        }
       }
     } else {
       setShowConfirmDel(true);

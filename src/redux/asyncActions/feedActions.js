@@ -72,7 +72,7 @@ export const bookmarkPost = (token, post) => async (dispatch) => {
       } else {
         dispatch(bookmarkActions.addBookmark({ post: resp.data.post }));
       }
-      toast.success(resp.message, {
+      toast.success(resp.data.message, {
         position: "bottom-center",
         duration: 5000,
         style: {

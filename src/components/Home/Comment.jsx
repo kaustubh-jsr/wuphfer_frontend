@@ -1,17 +1,34 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { BsDot } from "react-icons/bs";
+import { BsDot, BsThreeDots } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { likeUnlikeComment as likeUnlikeCommentApi } from "../../api/homePage";
+import {
+  likeUnlikeComment as likeUnlikeCommentApi,
+  deleteComment as deleteCommentApi,
+} from "../../api/homePage";
+import useClickOutside from "../../hooks/useClickOutside";
+import DeleteTweetDialog from "./DeleteTweetDialog";
+import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, setComments }) => {
   // comment
   //  -> comment_user, comment_text,commented_on_user,timestamp,isCommentLiked,numCommentLikes
   const { token } = useSelector((state) => state.auth);
   const [isLiked, setIsLiked] = useState(comment.is_liked);
   const [likeCount, setLikeCount] = useState(comment.likes);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const deleteCommentRef = useRef();
+  const handleDeleteComment = (e) => {
+    e.stopPropagation();
+    setShowDeleteDialog(true);
+  };
+  const onOutsiteDeleteDialogClick = () => {
+    setShowDeleteDialog(false);
+  };
+  useClickOutside(deleteCommentRef, onOutsiteDeleteDialogClick);
   const likeHandler = () => {
     // set client side status for faster ux
     if (isLiked) {
@@ -37,14 +54,38 @@ const Comment = ({ comment }) => {
       }
     })();
   };
+
+  const deleteComment = () => {
+    (async () => {
+      const resp = await deleteCommentApi(token, comment);
+      if (resp.status === 200) {
+        toast.success(resp.data.message, {
+          position: "bottom-center",
+          duration: 5000,
+          style: {
+            color: "white",
+            backgroundColor: "rgb(14, 165, 233)",
+          },
+        });
+      }
+    })();
+  };
   return (
-    <div className="px-3 pt-3 flex border-b border-light-border dark:border-dark-border duration-200  hover:bg-slate-50 dark:hover:bg-slate-800">
+    <motion.div
+      layout
+      initial={{ opacity: 0, x: 0 }}
+      whileInView={{ opacity: 1 }}
+      exit={{ x: -100, opacity: 0 }}
+      viewport={{ once: true }}
+      transition={{ type: "spring", duration: 0.8, delay: 0 }}
+      className="px-3 pt-3 flex border-b border-light-border dark:border-dark-border duration-200  hover:bg-slate-50 dark:hover:bg-slate-800"
+    >
       <img
         src={comment.user_profile_image}
         alt={comment.user_full_name}
         className="h-14 w-14 rounded-full mr-4"
       />
-      <div className="flex flex-col gap-1 w-full">
+      <motion.div layout className="flex flex-col gap-1 w-full">
         <div className="flex gap-1">
           <h4 className="font-bold">{comment.user_full_name}</h4>
           <p className="text-gray-500">@{comment.user_username}</p>
@@ -55,6 +96,23 @@ const Comment = ({ comment }) => {
           <p className="text-gray-500">
             {moment(comment.timestamp).startOf("second").fromNow()}
           </p>
+          {comment.user_username === comment.current_user_username && (
+            <button className="ml-auto" onClick={handleDeleteComment}>
+              <BsThreeDots className="hover:bg-light-blue hover:text-blue-500 p-1 h-6 w-6 rounded-full" />
+            </button>
+          )}
+          {comment.user_username === comment.current_user_username &&
+            showDeleteDialog && (
+              <div className="relative">
+                <DeleteTweetDialog
+                  post={comment}
+                  deletePostRef={deleteCommentRef}
+                  setPosts={setComments}
+                  isComment={true}
+                  deleteComment={deleteComment}
+                />
+              </div>
+            )}
         </div>
         <p className="pb-2 text-gray-500 text-md">
           Replying to{" "}
@@ -79,8 +137,8 @@ const Comment = ({ comment }) => {
             <p>{likeCount}</p>
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

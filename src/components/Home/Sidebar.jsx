@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { FaHashtag, FaRegBookmark, FaEye } from "react-icons/fa";
-import { MdMailOutline, MdMoreHoriz, MdLogout } from "react-icons/md";
+import { FaGithub, FaHashtag, FaRegBookmark } from "react-icons/fa";
+import { MdMoreHoriz, MdLogout } from "react-icons/md";
 import { BiHome } from "react-icons/bi";
 import { HiOutlineUser } from "react-icons/hi";
 import { IoNotificationsOutline } from "react-icons/io5";
@@ -36,11 +36,7 @@ const Sidebar = ({ user, unreadNotifications }) => {
       <div className="nav-main flex flex-col gap-[2px] items-start ">
         <MaterialSymbolsSoundDetectionDogBarking className="text-[50px] text-sky-500 dark:text-white px-3 hover-effect" />
 
-        <SidebarLink text="Home" Icon={BiHome} active path="/" />
-        {/* <div className="flex justify-between gap-4 p-3 hover:bg-slate-200 dark:hover:bg-hover-dark-bg transition duration-200 cursor-pointer rounded-full">
-          <FaHashtag className="text-2xl dark:text-white" />
-          <p className="text-lg font-normal">Explore</p>
-        </div> */}
+        <SidebarLink text="Home" Icon={BiHome} path="/" />
         <SidebarLink text="Explore" Icon={FaHashtag} path="/explore" />
         {/* <SidebarLink text="Profile Viewers" Icon={FaEye} /> */}
         <SidebarLink
@@ -52,7 +48,15 @@ const Sidebar = ({ user, unreadNotifications }) => {
         {/* <SidebarLink text="Messages" Icon={MdMailOutline} /> */}
         <SidebarLink text="Bookmarks" Icon={FaRegBookmark} path="/bookmarks" />
         <SidebarLink text="Profile" Icon={HiOutlineUser} path={user.username} />
-        {/* <SidebarLink text="More" Icon={CgMoreO} /> */}
+        <a
+          href="https://github.com/kaustubh-jsr/wuphfer_frontend"
+          target="_blank"
+          rel="noreferrer"
+          className="flex justify-between gap-4 p-3 hover:bg-slate-200 dark:hover:bg-hover-dark-bg transition duration-200 cursor-pointer rounded-full"
+        >
+          <FaGithub className="text-2xl dark:text-white" />
+          <p className="text-lg font-normal">Github</p>
+        </a>
 
         <div className="mt-2 hidden xl:inline">
           <button

@@ -332,6 +332,7 @@ export const likeUnlikePost = async (token, post) => {
     toast.error(e.response.data.message, {
       position: "bottom-center",
       duration: 5000,
+      id: "like_post",
       style: {
         color: "white",
         backgroundColor: "rgb(14, 165, 233)",
@@ -387,6 +388,7 @@ export const likeUnlikeComment = async (token, comment) => {
     toast.error(e.response.data.message, {
       position: "bottom-center",
       duration: 5000,
+      id: "like_comment",
       style: {
         color: "white",
         backgroundColor: "rgb(14, 165, 233)",
@@ -412,6 +414,7 @@ export const repostUndoRepost = async (token, post) => {
     toast.error(e.response.data.message, {
       position: "bottom-center",
       duration: 5000,
+      id: "repost",
       style: {
         color: "white",
         backgroundColor: "rgb(14, 165, 233)",
@@ -434,6 +437,7 @@ export const getAllPosts = async (token) => {
   } catch (e) {
     toast.error(e.response.data.message, {
       position: "bottom-center",
+      id: "get_all_posts",
       duration: 5000,
       style: {
         color: "white",
@@ -460,6 +464,34 @@ export const deletePost = async (token, post) => {
     toast.error(e.response.data.message, {
       position: "bottom-center",
       duration: 5000,
+      id: "post_deleted",
+      style: {
+        color: "white",
+        backgroundColor: "rgb(14, 165, 233)",
+      },
+    });
+    return { status: "failed" };
+  }
+};
+
+export const deleteComment = async (token, comment) => {
+  try {
+    const formData = new FormData();
+    formData.append("comment_id", comment.id);
+    const resp = await apiClient({
+      method: "POST",
+      url: `${BASE_URL}/delete_comment`,
+      headers: {
+        "Auth-token": token,
+      },
+      data: formData,
+    });
+    return resp;
+  } catch (e) {
+    toast.error(e.response.data.message, {
+      position: "bottom-center",
+      duration: 5000,
+      id: "comment_deleted",
       style: {
         color: "white",
         backgroundColor: "rgb(14, 165, 233)",
