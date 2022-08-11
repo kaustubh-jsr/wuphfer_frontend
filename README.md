@@ -34,16 +34,15 @@ The app has the following major features
 
 ### Posts:
 
-- Create Post
+- Create/Delete Post
 - Bookmark Post
 - Like/Unlike Post
-- Comment on Post
+- Add / Delete comment on Post
 - Like/Unlike Comment
 - Retweet Post
-- Error toast on reaction(like/comment/retweet) on deleted post
+- Error toast on reaction(like/comment/retweet) on deleted post/comment.
 - Notification on reaction(like/comment/retweet) to post/comment
-- See Post Likes
-- See Post Retweets
+
 
 ### Pages
 
