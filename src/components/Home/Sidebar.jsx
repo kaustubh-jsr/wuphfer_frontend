@@ -55,7 +55,7 @@ const Sidebar = ({ user, unreadNotifications }) => {
           className="flex justify-between gap-4 p-3 hover:bg-slate-200 dark:hover:bg-hover-dark-bg transition duration-200 cursor-pointer rounded-full"
         >
           <FaGithub className="text-2xl dark:text-white" />
-          <p className="text-lg font-normal">Github</p>
+          <p className="text-lg font-normal hidden xl:inline">Github</p>
         </a>
 
         <div className="mt-2 hidden xl:inline">

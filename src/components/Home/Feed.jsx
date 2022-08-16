@@ -16,14 +16,17 @@ const Feed = () => {
   // outlet component rendered by using a useOutletContext hook
   const user = useOutletContext();
   const [currentPostContent, setCurrentPostContent] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   useDocumentTitle("Home / Wuphfer");
   useEffect(() => {
     // retreive user feed from backend and update it in store
     if (isAuthenticated) {
+      if (!posts.length) {
+        setLoading(true);
+      }
       dispatch(setFeedPostsFromDB(token, setLoading));
     }
-  }, [dispatch, token, isAuthenticated]);
+  }, [dispatch, token, isAuthenticated, posts.length]);
 
   // useEffect(() => {
   //   const handleResize = () => {
